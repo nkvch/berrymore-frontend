@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          nvm use 16
+          source ~/.bashrc
           yarn install
 
       - name: Build
