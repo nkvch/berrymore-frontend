@@ -1,7 +1,6 @@
-import React from 'react';
-import { Modal as MuiModal, Paper } from '@mui/material';
-import { CloseButton, ModalBackdrop, ModalBlock } from './elements';
 import { Close } from '@mui/icons-material';
+import React from 'react';
+import { CloseButton, ModalBackdrop, ModalBlock } from './elements';
 
 export interface ModalProps {
   open: boolean;

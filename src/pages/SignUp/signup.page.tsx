@@ -102,7 +102,7 @@ function SignUp() {
             {
               isLoading ? <CircularProgress /> :
                 <Form<SignUpRequest>
-                  onSubmit={(vals, helpers) => {
+                  onSubmit={(vals) => {
                     signUpMutation(vals);
                   }} fields={signUpFormFields} submitText="Зарегистрироваться" />
             }
@@ -115,7 +115,7 @@ function SignUp() {
             {
               isConfirmEmailLoading ? <CircularProgress /> :
                 <Form<{ token: string }>
-                  onSubmit={(vals, helpers) => {
+                  onSubmit={(vals) => {
                     confirmEmailMutation(vals);
                   }} fields={confirmEmailFormFields} submitText="Подтвердить" />
             }

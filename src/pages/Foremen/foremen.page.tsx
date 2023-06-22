@@ -1,14 +1,13 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import authorized from "../../helpers/withAuth";
-import { useMemo, useState } from "react";
-import getForemen, { ForemanTableItem } from "../../api/queryFns/foremen.query";
-import usePaginatedQuery from "../../api/hooks/usePaginatedQuery";
-import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from "@mui/x-data-grid";
-import { Button, IconButton } from "@mui/material";
-import { Navigate, useNavigate } from "react-router-dom";
-import { AddButton } from "./elements";
 import { Delete, Edit } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from "@mui/x-data-grid";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import usePaginatedQuery from "../../api/hooks/usePaginatedQuery";
+import getForemen, { ForemanTableItem } from "../../api/queryFns/foremen.query";
 import Modal from "../../components/common/Modal/Modal";
+import authorized from "../../helpers/withAuth";
+import { AddButton } from "./elements";
 
 
 function ForemenPage() {
@@ -19,18 +18,10 @@ function ForemenPage() {
   const {
     data,
     isFetching,
-    hasNextPage,
-    hasPreviousPage,
-    isFirstPage,
-    isLastPage,
     page,
     perPage,
     setPage,
     setPerPage,
-    goToNextPage,
-    goToFirstPage,
-    goToLastPage,
-    goToPreviousPage,
   } = usePaginatedQuery<ForemanTableItem>(
     ['foremen'],
     getForemen,

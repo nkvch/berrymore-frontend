@@ -1,18 +1,15 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import getJwtExpDate from "../../../utils/getJwtExpDate";
-import refreshToken from "../resfreshToken";
-import useLogout from "./useLogout";
+import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import authState from "../../../recoil/authState";
-import { useQuery } from "@tanstack/react-query";
+import getJwtExpDate from "../../../utils/getJwtExpDate";
 import getMe from "../../queryFns/me.query";
+import refreshToken from "../resfreshToken";
 
 const useAuth = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const logout = useLogout();
-  const [auth, setAuth] = useRecoilState(authState);
+  const [, setAuth] = useRecoilState(authState);
 
   useQuery({
     queryKey: ['me'],

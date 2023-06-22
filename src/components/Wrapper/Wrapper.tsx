@@ -7,33 +7,27 @@ import {
   IconButton,
   List,
   ListItemIcon,
-  ListItemText,
-  Typography
+  ListItemText
 } from '@mui/material';
 // import LogoutBtn from './components/LogoutBtn';
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
-import authState, { isLoggedIn, isLoggedOut } from '../../recoil/authState';
+import { Helmet } from 'react-helmet';
+import { Outlet, useNavigate } from "react-router-dom";
+import { useRecoilValue } from 'recoil';
+import useAuth from '../../api/auth/hooks/useAuth';
+import useLogout from '../../api/auth/hooks/useLogout';
+import useSubtitle from '../../hooks/useSubtitle';
+import { isLoggedIn, isLoggedOut } from '../../recoil/authState';
 import Logo from '../Logo/Logo';
+import Notifications from '../Notifications/Notifications';
 import { Block } from '../elements/Block';
+import FlexContainer from '../elements/FlexContainer';
 import { MenuItems } from './config';
 import { AppBar, AppBarButton, BottomNavigation, BottomSideBarSection, ContactButtonText, Drawer, ListItemButton, LogButtonsContainer, LogoutBtn, Main, PageTitle, SideBar, SideBarLink, ToolBar } from './elements';
-import FlexContainer from '../elements/FlexContainer';
-import useSubtitle from '../../hooks/useSubtitle';
-import useLogout from '../../api/auth/hooks/useLogout';
-import useAuth from '../../api/auth/hooks/useAuth';
-import { Helmet } from 'react-helmet';
-import Notifications from '../Notifications/Notifications';
-
-const styles: any = {}
 
 const Wrapper = () => {
   useAuth();
   // const { user, logout, mode, setMode, ismobile } = useContext(Context);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const [auth, setAuth] = useRecoilState(authState);
 
   const subTitle = useSubtitle();
 

@@ -6,7 +6,7 @@ const useLogout = () => {
   const navigate = useNavigate();
 
   return useRecoilCallback(({ set }) => () => {
-    set(authState, { user: null, authenticated: false });
+    set(authState, { user: null, isPending: false });
     localStorage.removeItem('jwt');
     navigate('/signin');
   });

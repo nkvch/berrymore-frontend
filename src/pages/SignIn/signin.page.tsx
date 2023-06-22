@@ -50,7 +50,7 @@ function SignIn() {
       {
         isLoading ? <CircularProgress /> :
           <Form<{ username: string, password: string }>
-            onSubmit={(vals, helpers) => {
+            onSubmit={(vals) => {
               signInMutation(vals);
             }} fields={signInFormFields} submitText="Войти" />
       }
