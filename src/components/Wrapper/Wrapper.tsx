@@ -1,0 +1,171 @@
+import { ContactSupport, Logout } from '@mui/icons-material';
+import {
+  BottomNavigationAction,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  List,
+  ListItemIcon,
+  ListItemText,
+  Typography
+} from '@mui/material';
+// import LogoutBtn from './components/LogoutBtn';
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
+import authState, { isLoggedIn, isLoggedOut } from '../../recoil/authState';
+import Logo from '../Logo/Logo';
+import { Block } from '../elements/Block';
+import { MenuItems } from './config';
+import { AppBar, AppBarButton, BottomNavigation, BottomSideBarSection, ContactButtonText, Drawer, ListItemButton, LogButtonsContainer, LogoutBtn, Main, PageTitle, SideBar, SideBarLink, ToolBar } from './elements';
+import FlexContainer from '../elements/FlexContainer';
+import useSubtitle from '../../hooks/useSubtitle';
+import useLogout from '../../api/auth/hooks/useLogout';
+import useAuth from '../../api/auth/hooks/useAuth';
+import { Helmet } from 'react-helmet';
+import Notifications from '../Notifications/Notifications';
+
+const styles: any = {}
+
+const Wrapper = () => {
+  useAuth();
+  // const { user, logout, mode, setMode, ismobile } = useContext(Context);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [auth, setAuth] = useRecoilState(authState);
+
+  const subTitle = useSubtitle();
+
+  const loggedIn = useRecoilValue(isLoggedIn);
+  const loggedout = useRecoilValue(isLoggedOut);
+
+  const logout = useLogout();
+
+  const menuItems = MenuItems[loggedIn ? 'authenticated' : 'unauthenticated'];
+
+  return (
+    <>
+      <Helmet>
+        <title>Berrymore | {subTitle}</title>
+      </Helmet>
+      <AppBar
+        className={loggedout ? 'loggedout' : 'loggedin'}
+      >
+        <ToolBar>
+          <Logo subTitle={subTitle} />
+          <FlexContainer>
+            {!loggedIn && (
+              <LogButtonsContainer>
+                <AppBarButton onClick={() => navigate('/signin')}>
+                  Войти
+                </AppBarButton>
+                <AppBarButton onClick={() => navigate('/signup')}>
+                  Регистрация
+                </AppBarButton>
+              </LogButtonsContainer>
+            )}
+            <AppBarButton
+              size="large"
+              onClick={() => navigate('/support/new-request')}
+              title="Связаться с поддержкой"
+            >
+              <ContactSupport />
+              <ContactButtonText>Связаться с поддержкой</ContactButtonText>
+            </AppBarButton>
+            {!loggedout && (
+              <Button variant="text" onClick={logout}>
+                Выйти
+              </Button>
+            )}
+          </FlexContainer>
+        </ToolBar>
+      </AppBar>
+      <Drawer className={loggedout ? 'loggedout' : 'loggedin'}>
+        <SideBar>
+          <Box>
+            <Logo subTitle={subTitle} />
+            <Divider />
+            <List>
+              {menuItems.map(({ text, Icon, linkUrl }) => (
+                <ListItemButton key={text}>
+                  <SideBarLink to={linkUrl}>
+                    <ListItemIcon>
+                      <Icon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </SideBarLink>
+                </ListItemButton>
+              ))}
+            </List>
+          </Box>
+          <BottomSideBarSection>
+            <IconButton
+              size="large"
+              onClick={() => navigate('/support/new-request')}
+              title="Связаться с поддержкой"
+              style={{
+                borderRadius: 4,
+                fontSize: 14,
+              }}
+            >
+              <ContactSupport />
+              Связаться с поддержкой
+            </IconButton>
+            <Divider />
+            {loggedIn && <LogoutBtn
+              onClick={logout}
+              endIcon={<Logout />}
+            >
+              Выйти
+            </LogoutBtn>}
+          </BottomSideBarSection>
+        </SideBar>
+      </Drawer>
+      <Main
+        className={loggedout ? 'loggedout' : 'loggedin'}
+      >
+        <Notifications />
+        <Block>
+          <PageTitle>
+            {subTitle}
+          </PageTitle>
+          <Outlet />
+        </Block>
+      </Main>
+      {/* TODO: render in router */}
+      {/* {user && router.isReady && pathname !== '/new-portion' && (
+        <IconButton
+          style={{
+            position: 'fixed',
+            backgroundColor: 'white',
+            borderRadius: '50%',
+            width: 65,
+            height: 65,
+            bottom: 60,
+            right: 15,
+            boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)',
+            zIndex: 1000,
+          }}
+          href="/new-portion"
+          size="large"
+        >
+          {ismobile ? <QrCodeScanner /> : <AddCircle />}
+        </IconButton>
+      )} */}
+      <BottomNavigation value='TODO'>
+        {menuItems.map(({ text, Icon, linkUrl }) => (
+          <BottomNavigationAction
+            key={text}
+            label={text}
+            icon={<Icon />}
+            value={linkUrl}
+            onClick={() => navigate(linkUrl)}
+          />
+        ))}
+      </BottomNavigation>
+    </>
+  );
+};
+
+export default Wrapper;
