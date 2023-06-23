@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import addForeman, { AddForemanRequest } from "../../../api/mutationFns/addforeman.mutation";
 import { notification } from "../../../components/Notifications/Notifications";
 import { useNavigate } from "react-router-dom";
+import LoadingBox from "../../../components/common/LoadingBox/LoadingBox";
 
 const foremanFormFields: FieldData[] = [
   {
@@ -77,7 +78,7 @@ function CreateForeman() {
         Запомните <strong>логин</strong> и <strong>пароль</strong> бригадира, чтобы передать их ему лично. Логин и пароль нельзя будет подсмореть позже.
       </Alert>
       {
-        isLoading ? <CircularProgress /> : <Form<AddForemanRequest>
+        isLoading ? <LoadingBox /> : <Form<AddForemanRequest>
           fields={foremanFormFields}
           submitText="Создать бригадира"
           onSubmit={(values) => createForemanMutation(values)}

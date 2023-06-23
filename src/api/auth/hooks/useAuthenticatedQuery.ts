@@ -1,16 +1,24 @@
-import { QueryKey, QueryOptions, useQuery } from '@tanstack/react-query';
+import { QueryFunction, QueryFunctionContext, QueryKey, UseQueryOptions, useQuery } from '@tanstack/react-query';
 import getJwtExpDate from '../../../utils/getJwtExpDate';
 import refreshToken from '../resfreshToken';
 import useLogout from './useLogout';
 
-function useAuthenticatedQuery<T>(
-  queryKey: QueryKey,
-  queryFn: () => Promise<T>,
-  options?: QueryOptions<T>
+function useAuthenticatedQuery<
+  TQueryFnData = unknown,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+>(
+  queryKey: TQueryKey,
+  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
+  options?: Omit<
+    UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+    'queryKey' | 'queryFn' | 'initialData'
+  > & { initialData?: () => undefined },
 ) {
   const logout = useLogout();
 
-  const useQueryResult = useQuery<T>(queryKey, async () => {
+  const useQueryResult = useQuery<TQueryFnData, TError, TData, TQueryKey>(queryKey, async (context: QueryFunctionContext<TQueryKey, any>) => {
     const jwt = localStorage.getItem('jwt');
 
     if (!jwt || jwt === 'undefined') {
@@ -27,7 +35,7 @@ function useAuthenticatedQuery<T>(
       }
     }
 
-    return queryFn();
+    return queryFn(context);
   }, options);
 
   return useQueryResult;

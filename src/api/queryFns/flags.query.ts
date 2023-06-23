@@ -2,27 +2,26 @@ import authFetch from "../auth/helpers/authFetch";
 import config from "../config"
 import { PaginatedResponse, PaginationParams } from "../types/pagination";
 
-const url = `${config.baseUrl}/users/foremen`;
+const url = `${config.baseUrl}/flags`;
 
-export interface ForemanTableItem {
+export interface FlagItem {
   id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
+  name: string;
+  color: string;
 }
 
-type GetForemenResponse = PaginatedResponse<ForemanTableItem>;
+type GetFlagsResponse = PaginatedResponse<FlagItem>;
 
-const getForemen = async (search: string, pagParams: PaginationParams) => {
+const getFlags = async (search: string, pagParams: PaginationParams) => {
   const urlWithParams = new URL(url);
   urlWithParams.searchParams.append('page', pagParams.page.toString());
   urlWithParams.searchParams.append('perPage', pagParams.perPage.toString());
 
   const response = await authFetch(urlWithParams.toString());
 
-  const data: GetForemenResponse = await response.json();
+  const data: GetFlagsResponse = await response.json();
 
   return data;
 }
 
-export default getForemen;
+export default getFlags;

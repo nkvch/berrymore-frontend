@@ -6,6 +6,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import SignUp from './pages/SignUp/signup.page';
 import ForemenPage from './pages/Foremen/foremen.page';
 import CreateUpdateForemanPage from './pages/Foremen/CreateForeman/create-foreman.page';
+import UpdateForemanPage from './pages/Foremen/UpdateForeman/update-foreman.page';
+import CreateEmployeePage from './pages/Employees/CreateEmployee/create-employee.page';
+import EmployeesPage from './pages/Employees/employees.page';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -30,6 +33,18 @@ const router = createBrowserRouter([{
     {
       path: '/foremen/create',
       element: <CreateUpdateForemanPage />
+    },
+    {
+      path: '/foremen/:id',
+      element: <UpdateForemanPage />
+    },
+    {
+      path: '/employees',
+      element: <EmployeesPage />
+    },
+    {
+      path: '/employees/create',
+      element: <CreateEmployeePage />
     },
     {
       path: '/stats',

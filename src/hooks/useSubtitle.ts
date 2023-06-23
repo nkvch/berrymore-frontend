@@ -1,27 +1,36 @@
-import { useLocation } from "react-router-dom"
+import { useMatch } from "react-router-dom";
 
 const useSubtitle = () => {
-  const location = useLocation();
+  const isHome = useMatch('/');
+  const isSignin = useMatch('/signin');
+  const isSignup = useMatch('/signup');
+  const isStats = useMatch('/stats');
+  const isForemen = useMatch('/foremen');
+  const isCreateForeman = useMatch('/foremen/create');
+  const isForeman = useMatch('/foremen/:id');
+  const isCreateEmployee = useMatch('/employees/create');
+  const isEmployees = useMatch('/employees');
 
-  switch (location.pathname) {
-    case '/':
-      return 'Главная';
-    case '/about':
-      return 'О нас';
-    case '/contacts':
-      return 'Контакты';
-    case '/signin':
-      return 'Вход';
-    case '/signup':
-      return 'Регистрация';
-    case '/foremen':
-      return 'Бригадиры';
-    case '/foremen/create':
-      return 'Добавление бригадира';
-    case '/stats':
-      return 'Статистика';
-    default:
-      return '';
+  if (isHome) {
+    return 'Главная';
+  } else if (isSignin) {
+    return 'Вход';
+  } else if (isSignup) {
+    return 'Регистрация';
+  } else if (isStats) {
+    return 'Статистика';
+  } else if (isForemen) {
+    return 'Бригадиры';
+  } else if (isForeman) {
+    return 'Редактирование бригадира';
+  } else if (isCreateForeman) {
+    return 'Новый бригадир';
+  } else if (isCreateEmployee) {
+    return 'Новый сборщик';
+  } else if (isEmployees) {
+    return 'Сборщики';
+  } else {
+    return '';
   }
 }
 

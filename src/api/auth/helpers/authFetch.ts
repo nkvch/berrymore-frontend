@@ -10,7 +10,11 @@ const authFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<
   });
 
   if (!response.ok) {
-    throw new Error(response.statusText);
+    const json = await response.json();
+
+    throw new Error(
+      Array.isArray(json.message) ? json.message.join(', ') : json.message
+    );
   }
 
   return response;

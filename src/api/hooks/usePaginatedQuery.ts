@@ -1,17 +1,22 @@
-import { QueryKey, QueryOptions } from "@tanstack/react-query";
-import { PaginationParams, PaginatedResponse } from "../types/pagination";
+import { QueryKey, UseQueryOptions } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
 import useAuthenticatedQuery from "../auth/hooks/useAuthenticatedQuery";
+import { PaginatedResponse, PaginationParams } from "../types/pagination";
 
-const usePaginatedQuery = <T>(
+const usePaginatedQuery = <
+  T,
+>(
   queryKey: QueryKey,
   queryFn: (pagParams: PaginationParams) => Promise<PaginatedResponse<T>>,
-  options?: QueryOptions<PaginatedResponse<T>>
+  options?: Omit<
+    UseQueryOptions<PaginatedResponse<T>, Error, PaginatedResponse<T>, QueryKey>,
+    'queryKey' | 'queryFn' | 'initialData'
+  > & { initialData?: () => undefined },
 ) => {
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(10);
 
-  const useQueryResult = useAuthenticatedQuery<PaginatedResponse<T>>(
+  const useQueryResult = useAuthenticatedQuery<PaginatedResponse<T>, Error, PaginatedResponse<T>, QueryKey>(
     [...queryKey, page, perPage],
     async () => {
       const pagParams: PaginationParams = {
