@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteInputChangeReason, Avatar, Box, CircularProgress, TextField } from '@mui/material';
+import { Alert, Autocomplete, AutocompleteInputChangeReason, Avatar, Box, CircularProgress, TextField } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { SyntheticEvent, useCallback, useMemo, useRef, useState } from 'react';
 import { PaginatedResponse, PaginationParams } from '../../../api/types/pagination';
@@ -46,7 +46,7 @@ function FetchSelect<TApiReturnItem extends {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-    [uniqueId, search],
+    [search, uniqueId.current],
     ({ pageParam = 0 }) => queryFn(search, { page: pageParam, perPage: 5 }),
     {
       getNextPageParam: (lastPage, pages) => {
@@ -84,20 +84,19 @@ function FetchSelect<TApiReturnItem extends {
   };
 
   const handleInputChange = useCallback((event: SyntheticEvent<Element, Event>, value: string, reason: AutocompleteInputChangeReason) => {
-    if (backendSearch)
+    if (backendSearch && reason === 'input')
       setSearch(value);
-
-    const [clearBtn] = document.getElementById(autocompleteId)?.parentElement?.getElementsByClassName('MuiAutocomplete-clearIndicator') ?? [];
-    clearBtn?.addEventListener('click', clearFetchSelect);
   }, []);
 
-  const clearFetchSelect = () => {
-    setSearch('');
-    onChange(null);
-  };
-
   const onAutocompleteChange = useCallback((event: React.ChangeEvent<{}>, newvalue: TApiReturnItem | NonNullable<string | TApiReturnItem> | (string | TApiReturnItem)[] | null) => {
-    console.log('newvalue', newvalue);
+
+    console.log(newvalue);
+
+    if (!newvalue) {
+      setSearch('');
+      onChange(null);
+    }
+
 
     if (multiple && Array.isArray(newvalue)) {
       if (newvalue.length === 0) {
@@ -133,6 +132,7 @@ function FetchSelect<TApiReturnItem extends {
       multiple={multiple}
       id={autocompleteId}
       options={collectedItems}
+      sx={{ flex: 1 }}
       autoHighlight
       value={collectedItems.find(item => item[valueKey] === value)}
       isOptionEqualToValue={(option, value) => option[valueKey] === value[valueKey]}
@@ -156,50 +156,48 @@ function FetchSelect<TApiReturnItem extends {
       loading={loading}
       loadingText="Загрузка"
       noOptionsText="Не найдено"
-      renderOption={(props, option) => {
-        if (!backendSearch && option[valueKey] === 'loading') {
-          return (
-            <Box
-              component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-              {...props}
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                fetchNextPage();
-              }}
-            >
-              Загрузить еще
-            </Box>
-          )
-        }
-
-        if (backendSearch && option[valueKey] === 'loading') {
-          return (
-            <Box
-              component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-            >
-              Начните вводить текст для поиска
-            </Box>
-          )
-        }
-
-        return (
-          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-            {
-              Object.entries(option).filter(([field]) =>
-                showInOption.find(item => item.key === field)
-              ).map(([key, value]) => renderCellContent([key as keyof TApiReturnItem, value as TApiReturnItem[keyof TApiReturnItem]]))
-            }
-          </Box>
-        )
-      }}
+      renderOption={(props, option) => (
+        <>
+          {
+            option[valueKey] === 'loading' ? (
+              <Box
+                component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                {...props}
+                onClick={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  fetchNextPage();
+                }}
+              >
+                Загрузить еще
+              </Box>
+            ) : (
+              <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                {
+                  Object.entries(option).filter(([field]) =>
+                    showInOption.find(item => item.key === field)
+                  ).map(([key, value]) => renderCellContent([key as keyof TApiReturnItem, value as TApiReturnItem[keyof TApiReturnItem]]))
+                }
+              </Box>
+            )
+          }
+          {
+            backendSearch && option[valueKey] === 'loading' && (
+              <Alert severity="info">
+                Чтобы найти сотрудника впишите фамилию полностью
+              </Alert>
+            )
+          }
+        </>
+      )
+      }
       renderInput={(params) => (
         <TextField
           {...params}
           label={label}
           inputProps={{
             ...params.inputProps,
-            // autoComplete: 'new-password', // disable autocomplete and autofill
+            autoComplete: 'new-password', // disable autocomplete and autofill
             endAdornment: (
               <>
                 {loading ? <CircularProgress color="inherit" size={20} /> : null}

@@ -17,6 +17,7 @@ import { FileUploader } from 'react-drag-drop-files';
 import DroppableImageContainer from '../DroppableImageContainer/DroppableImageContainer';
 import FetchSelect from '../FetchSelect/FetchSelect';
 import React from 'react';
+import getLocalDateTimeString from '../../../utils/getLocalDateTimeString';
 
 const renderField = (
   ...[{
@@ -53,6 +54,7 @@ const renderField = (
         showInOption,
         showInValue,
         valueKey,
+        backendSearch,
       } = fetchSelectConfig;
 
       fieldToRender = (
@@ -63,6 +65,7 @@ const renderField = (
           onChange={(value) => setFieldValue(name, value)}
           queryFn={queryFn}
           multiple={multiple}
+          backendSearch={backendSearch}
           showInOption={showInOption}
           showInValue={showInValue}
           valueKey={valueKey}
@@ -85,6 +88,39 @@ const renderField = (
         </React.Fragment>
       );
       break;
+    case 'date':
+    case 'datetime-local':
+      fieldToRender = (
+        <TextField
+          {...rest}
+          name={name}
+          label={label}
+          variant="outlined"
+          onChange={(e) => {
+            const localDateTimeString = e.target.value;
+
+            const isOnlyDate = localDateTimeString.match(/^\d{4}-\d{2}-\d{2}$/);
+
+            if (isOnlyDate) {
+              const date = new Date(localDateTimeString);
+              date.setHours(0, 0, 0, 0);
+              setFieldValue(name, new Date(date));
+              return;
+            }
+
+            setFieldValue(
+              name,
+              localDateTimeString ? new Date(localDateTimeString) : null
+            );
+          }}
+          value={values[name] ? getLocalDateTimeString(values[name], type === 'date') : null}
+          type={type}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+      );
+      break;
     case 'phone':
       fieldToRender = (
         <React.Fragment key={key}>
@@ -103,6 +139,7 @@ const renderField = (
       fieldToRender = (
         <React.Fragment key={key}>
           <TextField
+            {...rest}
             key={name}
             name={name}
             label={label}
@@ -123,8 +160,7 @@ const renderField = (
   return fieldToRender;
 };
 
-function Form<Vals extends FormikValues>(props: FormProps<Vals>) {
-
+function Form<Vals extends FormikValues>(props: FormProps<Vals> & { className?: string }) {
   const initialValuesBasedOnFields = Object.fromEntries(props.fields.map((fieldData) => {
     const { name, type, fetchSelectConfig } = fieldData;
 
@@ -161,6 +197,7 @@ function Form<Vals extends FormikValues>(props: FormProps<Vals>) {
     submitText,
     initialValues = initialValuesBasedOnFields,
     loading,
+    className,
     ...formikProps
   } = props;
   return (
@@ -183,6 +220,7 @@ function Form<Vals extends FormikValues>(props: FormProps<Vals>) {
         touched,
       }) => (
         <VerticalForm
+          className={className}
           onSubmit={handleSubmit}
         >
           {fields.map((fieldData, index) =>

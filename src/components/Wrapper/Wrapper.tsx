@@ -23,6 +23,8 @@ import { Block } from '../elements/Block';
 import FlexContainer from '../elements/FlexContainer';
 import { MenuItems } from './config';
 import { AppBar, AppBarButton, BottomNavigation, BottomSideBarSection, ContactButtonText, Drawer, ListItemButton, LogButtonsContainer, LogoutBtn, Main, PageTitle, SideBar, SideBarLink, ToolBar } from './elements';
+import mobileState from '../../recoil/mobileState';
+import AddPortionButton from '../AddPortionButton/AddPortionButton';
 
 const Wrapper = () => {
   useAuth();
@@ -33,6 +35,8 @@ const Wrapper = () => {
 
   const loggedIn = useRecoilValue(isLoggedIn);
   const loggedout = useRecoilValue(isLoggedOut);
+
+  const ismobile = useRecoilValue(mobileState);
 
   const logout = useLogout();
 
@@ -127,26 +131,7 @@ const Wrapper = () => {
           <Outlet />
         </Block>
       </Main>
-      {/* TODO: render in router */}
-      {/* {user && router.isReady && pathname !== '/new-portion' && (
-        <IconButton
-          style={{
-            position: 'fixed',
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            width: 65,
-            height: 65,
-            bottom: 60,
-            right: 15,
-            boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)',
-            zIndex: 1000,
-          }}
-          href="/new-portion"
-          size="large"
-        >
-          {ismobile ? <QrCodeScanner /> : <AddCircle />}
-        </IconButton>
-      )} */}
+      <AddPortionButton />
       <BottomNavigation value='TODO'>
         {menuItems.map(({ text, Icon, linkUrl }) => (
           <BottomNavigationAction

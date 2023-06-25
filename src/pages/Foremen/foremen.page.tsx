@@ -7,7 +7,7 @@ import usePaginatedQuery from "../../api/hooks/usePaginatedQuery";
 import getForemen, { ForemanTableItem } from "../../api/queryFns/foremen.query";
 import ConfirmModal from "../../components/common/Modal/variants/ConfirmModal/ConfirmModal";
 import authorized from "../../helpers/withAuth";
-import { AddButton } from "./elements";
+import { AddButton, DataGridLimitedHeight } from "./elements";
 import useAuthenticatedMutation from "../../api/auth/hooks/useAuthenticatedMutation";
 import deleteForemanMutationFn, { DeleteForemanMutationVariables } from "../../api/mutationFns/deleteforeman.mutation";
 import { notification } from "../../components/Notifications/Notifications";
@@ -109,8 +109,8 @@ function ForemenPage() {
         title="Удаление бригадира"
         text={`Вы действительно хотите удалить бригадира ${deletingForeman?.firstName} ${deletingForeman?.lastName}? Данное действие нельзя отменить.`}
       />
-      <DataGrid
-        columns={columns}
+      <DataGridLimitedHeight
+        columns={columns as any}
         rows={data?.items || []}
         loading={isFetching}
         pageSizeOptions={[

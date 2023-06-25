@@ -1,4 +1,5 @@
 import { useMatch } from "react-router-dom";
+import useQueryParams from "./useQueryParams";
 
 const useSubtitle = () => {
   const isHome = useMatch('/');
@@ -10,6 +11,20 @@ const useSubtitle = () => {
   const isForeman = useMatch('/foremen/:id');
   const isCreateEmployee = useMatch('/employees/create');
   const isEmployees = useMatch('/employees');
+  const isShifts = useMatch('/shifts');
+  const isShift = useMatch('/shifts/day');
+  const isProducts = useMatch('/products');
+  const isCreateProduct = useMatch('/products/create');
+  const isProduct = useMatch('/products/:id');
+  const queryParams = useQueryParams();
+  let date = queryParams.get('date');
+
+  if (date)
+    date = new Date(date).toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
 
   if (isHome) {
     return 'Главная';
@@ -29,6 +44,16 @@ const useSubtitle = () => {
     return 'Новый сборщик';
   } else if (isEmployees) {
     return 'Сборщики';
+  } else if (isShifts) {
+    return 'Смены';
+  } else if (isShift) {
+    return `Смена ${date}`;
+  } else if (isProducts) {
+    return 'Продукты';
+  } else if (isCreateProduct) {
+    return 'Новый продукт';
+  } else if (isProduct) {
+    return 'Редактирование продукта';
   } else {
     return '';
   }

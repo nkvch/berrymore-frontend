@@ -1,6 +1,6 @@
 import { MutationFunction } from "@tanstack/react-query";
-import config from "../config";
-import authFetch from "../auth/helpers/authFetch";
+import config from "../../config";
+import authFetch from "../../auth/helpers/authFetch";
 
 const url = `${config.baseUrl}/employees`;
 

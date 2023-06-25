@@ -4,7 +4,7 @@ import { PaginatedResponse, PaginationParams } from "../types/pagination";
 
 const url = `${config.baseUrl}/flags`;
 
-export interface FlagItem {
+export interface FlagItem extends Record<string, string | number> {
   id: number;
   name: string;
   color: string;

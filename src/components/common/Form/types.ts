@@ -19,6 +19,7 @@ export interface FetchSelectConfig<
   showInOption: DisplayedItem<TApiReturnItem>[],
   showInValue: DisplayedItem<TApiReturnItem>[],
   valueKey: keyof TApiReturnItem,
+  backendSearch?: boolean,
 }
 
 export interface FieldData extends Omit<TextFieldProps<'outlined'>, 'variant'> {

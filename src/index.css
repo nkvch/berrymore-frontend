@@ -93,3 +93,14 @@ button:focus-visible {
 } */
 
 /* register font from 'assets/fonts/MultiroundPro.otf */
+
+.my-chart {
+  position: relative;
+}
+
+.my-hint {
+  background-color: rgba(255, 255, 255, 0.582);
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(10, 10, 70, 0.555);
+}

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuthenticatedMutation from "../../../api/auth/hooks/useAuthenticatedMutation";
-import addEmployee, { AddEmployeeRequest } from "../../../api/mutationFns/addemployee.mutation";
+import addEmployee, { AddEmployeeRequest } from "../../../api/mutationFns/employees/addemployee.mutation";
 import getFlags, { FlagItem } from "../../../api/queryFns/flags.query";
 import getForemen, { ForemanTableItem } from "../../../api/queryFns/foremen.query";
 import { notification } from "../../../components/Notifications/Notifications";

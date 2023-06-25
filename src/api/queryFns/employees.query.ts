@@ -24,13 +24,18 @@ export interface EmployeeTableItem {
     firstName: string;
     lastName: string;
   } | null;
+  shifts: {
+    startDate: string;
+    endDate: string;
+  }[];
 }
 
 export interface EmployeesRequestParams {
   search?: string;
   flagsPresent?: number[];
   flagsAbsent?: number[];
-  foremanId?: number;
+  foremanId?: number | null;
+  hasShift?: boolean;
 }
 
 type GetEmployeesResponse = PaginatedResponse<EmployeeTableItem>;
@@ -42,16 +47,20 @@ const getEmployees = async (params: EmployeesRequestParams, pagParams: Paginatio
     urlWithParams.searchParams.append('search', params.search);
   }
 
-  if (params.flagsPresent) {
+  if (params.flagsPresent?.length) {
     urlWithParams.searchParams.append('flagsPresent', params.flagsPresent.join(','));
   }
 
-  if (params.flagsAbsent) {
+  if (params.flagsAbsent?.length) {
     urlWithParams.searchParams.append('flagsAbsent', params.flagsAbsent.join(','));
   }
 
   if (params.foremanId) {
     urlWithParams.searchParams.append('foremanId', params.foremanId.toString());
+  }
+
+  if (params.hasShift) {
+    urlWithParams.searchParams.append('hasShift', params.hasShift.toString());
   }
 
   urlWithParams.searchParams.append('page', pagParams.page.toString());

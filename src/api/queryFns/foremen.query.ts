@@ -4,7 +4,7 @@ import { PaginatedResponse, PaginationParams } from "../types/pagination";
 
 const url = `${config.baseUrl}/users/foremen`;
 
-export interface ForemanTableItem {
+export interface ForemanTableItem extends Record<string, string | number> {
   id: number;
   firstName: string;
   lastName: string;

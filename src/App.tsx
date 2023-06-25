@@ -9,6 +9,13 @@ import CreateUpdateForemanPage from './pages/Foremen/CreateForeman/create-forema
 import UpdateForemanPage from './pages/Foremen/UpdateForeman/update-foreman.page';
 import CreateEmployeePage from './pages/Employees/CreateEmployee/create-employee.page';
 import EmployeesPage from './pages/Employees/employees.page';
+import ShiftsPage from './pages/Shifts/shifts.page';
+import DayPage from './pages/Shifts/Day/day.page';
+import ProductsPage from './pages/Products/products.page';
+import CreateProductPage from './pages/Products/Create/create-product.page';
+import EditProductPage from './pages/Products/Edit/edit-product.page';
+import NewPortionPage from './pages/NewPortion/new-portion.page';
+import Stats from './pages/Stats/Stats';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -47,8 +54,32 @@ const router = createBrowserRouter([{
       element: <CreateEmployeePage />
     },
     {
+      path: '/shifts',
+      element: <ShiftsPage />
+    },
+    {
+      path: '/shifts/day',
+      element: <DayPage />,
+    },
+    {
+      path: '/products',
+      element: <ProductsPage />
+    },
+    {
+      path: '/products/create',
+      element: <CreateProductPage />
+    },
+    {
+      path: '/products/:id',
+      element: <EditProductPage />
+    },
+    {
+      path: '/new-portion',
+      element: <NewPortionPage />
+    },
+    {
       path: '/stats',
-      element: <div>Stats</div>
+      element: <Stats />
     },
   ]
 }]);
