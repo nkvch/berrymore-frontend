@@ -28,11 +28,11 @@ const productFormFields: FieldData[] = [
     type: 'number',
     validation: Yup.string().required('Это поле обязательно для заполнения'),
   },
-  {
-    name: 'photo',
-    label: 'Фото',
-    type: 'file',
-  }
+  // {
+  //   name: 'photo',
+  //   label: 'Фото',
+  //   type: 'file',
+  // }
 ];
 
 function EditProduct() {

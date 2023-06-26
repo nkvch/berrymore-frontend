@@ -20,6 +20,7 @@ function FetchSelect<TApiReturnItem extends {
   value: TApiReturnItem[keyof TApiReturnItem] | TApiReturnItem[keyof TApiReturnItem][],
   onChange: (value: TApiReturnItem[keyof TApiReturnItem] | TApiReturnItem[keyof TApiReturnItem][] | null) => void,
   backendSearch?: boolean,
+  preloadedValues?: TApiReturnItem | TApiReturnItem[],
 }) {
   const {
     queryFn,
@@ -31,6 +32,7 @@ function FetchSelect<TApiReturnItem extends {
     valueKey,
     onChange,
     backendSearch,
+    preloadedValues,
   } = props;
 
   const uniqueId = useRef(Math.random().toString(36).substring(7));
@@ -38,6 +40,7 @@ function FetchSelect<TApiReturnItem extends {
   const autocompleteId = `${uniqueId.current}fetchSelect`;
 
   const [search, setSearch] = useState('');
+  const [localSearch, setLocalSearch] = useState('');
 
   const {
     data,
@@ -86,14 +89,15 @@ function FetchSelect<TApiReturnItem extends {
   const handleInputChange = useCallback((event: SyntheticEvent<Element, Event>, value: string, reason: AutocompleteInputChangeReason) => {
     if (backendSearch && reason === 'input')
       setSearch(value);
+
+    if (!backendSearch && reason === 'input')
+      setLocalSearch(value);
   }, []);
 
   const onAutocompleteChange = useCallback((event: React.ChangeEvent<{}>, newvalue: TApiReturnItem | NonNullable<string | TApiReturnItem> | (string | TApiReturnItem)[] | null) => {
-
-    console.log(newvalue);
-
     if (!newvalue) {
       setSearch('');
+      setLocalSearch('');
       onChange(null);
     }
 
@@ -113,19 +117,34 @@ function FetchSelect<TApiReturnItem extends {
   }, [multiple, onChange, valueKey]);
 
   const collectedItems = useMemo(() => {
+    let result: TApiReturnItem[] = [];
     if (data) {
-      const dataItems = data.pages.flatMap(page => page.items);
+      result = data.pages.flatMap(page => page.items);
 
       if (hasNextPage) {
-        dataItems.push({
+        result.push({
           [valueKey]: 'loading',
         } as any);
       }
-
-      return dataItems;
     }
-    return [];
-  }, [data, hasNextPage]);
+
+    if (preloadedValues) {
+      if (multiple && Array.isArray(preloadedValues)) {
+        result = [...preloadedValues, ...result];
+      } else if (!multiple && !Array.isArray(preloadedValues)) {
+        result = [preloadedValues, ...result];
+      }
+    }
+
+    return result;
+  }, [data, hasNextPage, multiple, preloadedValues, valueKey]);
+
+  const autocompleteValue = useMemo(() => {
+    if (multiple && Array.isArray(value)) {
+      return collectedItems.filter(item => value.includes(item[valueKey]));
+    }
+    return collectedItems.find(item => item[valueKey] === value);
+  }, [collectedItems, multiple, value, valueKey]);
 
   return (
     <Autocomplete<TApiReturnItem, boolean, boolean, boolean>
@@ -134,11 +153,20 @@ function FetchSelect<TApiReturnItem extends {
       options={collectedItems}
       sx={{ flex: 1 }}
       autoHighlight
-      value={collectedItems.find(item => item[valueKey] === value)}
+      value={autocompleteValue}
       isOptionEqualToValue={(option, value) => option[valueKey] === value[valueKey]}
       filterOptions={option => {
-        if (multiple && Array.isArray(value)) {
+        if (multiple && Array.isArray(value) && backendSearch) {
           return option.filter(o => !value.includes(o[valueKey]));
+        }
+        if (!backendSearch) {
+          return option.filter(o => {
+            const isObject = typeof o === 'object';
+
+            const optionLabel = o ? showInValue.map(field => o[field.key]).join(' ') : ''
+
+            return optionLabel.toLowerCase().includes(localSearch.toLowerCase());
+          });
         }
         return option;
       }}

@@ -86,11 +86,11 @@ const employeeFormFields: FieldData[] = [
     label: 'Дополнительная информация',
     type: 'textarea',
   },
-  {
-    name: 'photo',
-    label: 'Фото',
-    type: 'file',
-  }
+  // {
+  //   name: 'photo',
+  //   label: 'Фото',
+  //   type: 'file',
+  // }
 ];
 
 function CreateEmployee() {

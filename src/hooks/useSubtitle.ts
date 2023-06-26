@@ -11,6 +11,7 @@ const useSubtitle = () => {
   const isForeman = useMatch('/foremen/:id');
   const isCreateEmployee = useMatch('/employees/create');
   const isEmployees = useMatch('/employees');
+  const isEmployee = useMatch('/employees/:id');
   const isShifts = useMatch('/shifts');
   const isShift = useMatch('/shifts/day');
   const isProducts = useMatch('/products');
@@ -44,6 +45,8 @@ const useSubtitle = () => {
     return 'Новый сборщик';
   } else if (isEmployees) {
     return 'Сборщики';
+  } else if (isEmployee) {
+    return 'Редактирование сборщика';
   } else if (isShifts) {
     return 'Смены';
   } else if (isShift) {

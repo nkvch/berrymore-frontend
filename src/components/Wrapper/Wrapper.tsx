@@ -63,14 +63,14 @@ const Wrapper = () => {
                 </AppBarButton>
               </LogButtonsContainer>
             )}
-            <AppBarButton
+            {/* <AppBarButton
               size="large"
               onClick={() => navigate('/support/new-request')}
               title="Связаться с поддержкой"
             >
               <ContactSupport />
               <ContactButtonText>Связаться с поддержкой</ContactButtonText>
-            </AppBarButton>
+            </AppBarButton> */}
             {!loggedout && (
               <Button variant="text" onClick={logout}>
                 Выйти
@@ -98,7 +98,7 @@ const Wrapper = () => {
             </List>
           </Box>
           <BottomSideBarSection>
-            <IconButton
+            {/* <IconButton
               size="large"
               onClick={() => navigate('/support/new-request')}
               title="Связаться с поддержкой"
@@ -109,7 +109,7 @@ const Wrapper = () => {
             >
               <ContactSupport />
               Связаться с поддержкой
-            </IconButton>
+            </IconButton> */}
             <Divider />
             {loggedIn && <LogoutBtn
               onClick={logout}

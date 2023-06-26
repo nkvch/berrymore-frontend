@@ -118,8 +118,6 @@ function Shifts() {
 
   const onChangeMonth = useCallback(
     (weekStart: Date, weekEnd: Date, monthStart: Date, monthEnd: Date) => {
-      console.log(weekStart, weekEnd, monthStart, monthEnd);
-
       setFrom(weekStart);
       setTo(weekEnd);
     },

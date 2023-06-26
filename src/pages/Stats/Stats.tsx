@@ -5,6 +5,7 @@ import getLatestStats from '../../api/queryFns/stats.query';
 import Chart from './Chart/Chart';
 import authorized from '../../helpers/withAuth';
 import { Typography } from '@mui/material';
+import LoadingBox from '../../components/common/LoadingBox/LoadingBox';
 
 
 const Stats = () => {
@@ -41,9 +42,11 @@ const Stats = () => {
           </>
         )
       }
-      <Typography variant="h4" component="h1" gutterBottom>
-        Всего за 2 нед. собрано: {stats?.totalAmount.toFixed(2)} кг
-      </Typography>
+      {
+        isFetching ? <LoadingBox /> : <Typography variant="h4" component="h1" gutterBottom>
+          Всего за 2 нед. собрано: {stats?.totalAmount.toFixed(2)} кг
+        </Typography>
+      }
     </>
   );
 };

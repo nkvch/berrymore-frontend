@@ -23,10 +23,6 @@ function AddPortion() {
   const [berryId, setBerryId] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  console.log('berryId', berryId);
-  console.log('useQr', useQr);
-  console.log('isMobile', isMobile);
-
   const {
     data: employee,
     isFetching: isFetchingEmployee,
@@ -86,6 +82,7 @@ function AddPortion() {
       fetchSelectConfig: {
         queryFn: (search, pagParams) => getEmployees({ search }, pagParams),
         backendSearch: true,
+        preloadedValues: employee,
         showInOption: [{
           key: 'firstName',
           type: 'text',
@@ -130,7 +127,7 @@ function AddPortion() {
       label: 'Дата и время',
       type: 'datetime-local',
     },
-  ]), []);
+  ]), [employee]);
 
   const initialValues = useMemo(() => ({
     employeeId: employee?.id ?? 0,

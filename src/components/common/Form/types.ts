@@ -15,6 +15,7 @@ export interface FetchSelectConfig<
   TApiReturnItem
 > {
   queryFn: (search: string, pagParams: PaginationParams) => Promise<PaginatedResponse<TApiReturnItem>>,
+  preloadedValues?: TApiReturnItem | TApiReturnItem[],
   multiple?: boolean,
   showInOption: DisplayedItem<TApiReturnItem>[],
   showInValue: DisplayedItem<TApiReturnItem>[],

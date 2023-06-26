@@ -16,6 +16,7 @@ import CreateProductPage from './pages/Products/Create/create-product.page';
 import EditProductPage from './pages/Products/Edit/edit-product.page';
 import NewPortionPage from './pages/NewPortion/new-portion.page';
 import Stats from './pages/Stats/Stats';
+import EditEmployeePage from './pages/Employees/EditEmployee/edit-employee.page';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -52,6 +53,10 @@ const router = createBrowserRouter([{
     {
       path: '/employees/create',
       element: <CreateEmployeePage />
+    },
+    {
+      path: '/employees/:id',
+      element: <EditEmployeePage />
     },
     {
       path: '/shifts',

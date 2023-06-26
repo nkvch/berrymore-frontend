@@ -19,8 +19,6 @@ const useAuth = () => {
         isPending: true,
       });
 
-      console.log('running /me query');
-
       return getMe();
     },
     onSuccess: (data) => {
@@ -40,8 +38,6 @@ const useAuth = () => {
       const expDate = getJwtExpDate(jwt);
 
       const isLessThanHour = expDate.getTime() - Date.now() < 1000 * 60 * 60;
-
-      console.log('isLessThanHour', isLessThanHour);
 
       if (isLessThanHour) {
         refreshToken().then((newJwt) => {

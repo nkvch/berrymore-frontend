@@ -55,6 +55,7 @@ const renderField = (
         showInValue,
         valueKey,
         backendSearch,
+        preloadedValues: preselectedValues,
       } = fetchSelectConfig;
 
       fieldToRender = (
@@ -69,6 +70,7 @@ const renderField = (
           showInOption={showInOption}
           showInValue={showInValue}
           valueKey={valueKey}
+          preloadedValues={preselectedValues}
         />
       );
       break;
