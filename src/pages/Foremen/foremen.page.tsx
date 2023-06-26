@@ -1,16 +1,16 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams, GridValueGetterParams } from "@mui/x-data-grid";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuthenticatedMutation from "../../api/auth/hooks/useAuthenticatedMutation";
 import usePaginatedQuery from "../../api/hooks/usePaginatedQuery";
+import deleteForemanMutationFn, { DeleteForemanMutationVariables } from "../../api/mutationFns/deleteforeman.mutation";
 import getForemen, { ForemanTableItem } from "../../api/queryFns/foremen.query";
+import { notification } from "../../components/Notifications/Notifications";
 import ConfirmModal from "../../components/common/Modal/variants/ConfirmModal/ConfirmModal";
 import authorized from "../../helpers/withAuth";
 import { AddButton, DataGridLimitedHeight } from "./elements";
-import useAuthenticatedMutation from "../../api/auth/hooks/useAuthenticatedMutation";
-import deleteForemanMutationFn, { DeleteForemanMutationVariables } from "../../api/mutationFns/deleteforeman.mutation";
-import { notification } from "../../components/Notifications/Notifications";
 
 
 function ForemenPage() {

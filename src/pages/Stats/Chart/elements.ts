@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import withDefaultProps from "../../../helpers/withDefaultProps";
 import { Hint, XYPlot } from "react-vis";
 
 

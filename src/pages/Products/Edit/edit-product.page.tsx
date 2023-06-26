@@ -1,19 +1,16 @@
-import { CircularProgress } from "@mui/material";
 import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuthenticatedMutation from "../../../api/auth/hooks/useAuthenticatedMutation";
 import useAuthenticatedQuery from "../../../api/auth/hooks/useAuthenticatedQuery";
-import updateForeman, { UpdateForemanRequest } from "../../../api/mutationFns/updateforeman.mutation";
-import getForeman from "../../../api/queryFns/foreman.query";
+import updateProductMutationFn, { UpdateProductMutationData } from "../../../api/mutationFns/products/update-product.mutation";
+import getProduct from "../../../api/queryFns/product.query";
 import { notification } from "../../../components/Notifications/Notifications";
 import Form from "../../../components/common/Form/Form";
 import { FieldData } from "../../../components/common/Form/types";
+import LoadingBox from "../../../components/common/LoadingBox/LoadingBox";
 import authorized from "../../../helpers/withAuth";
 import { Container } from "./elements";
-import getProduct from "../../../api/queryFns/product.query";
-import updateProductMutationFn, { UpdateProductMutationData } from "../../../api/mutationFns/products/update-product.mutation";
-import LoadingBox from "../../../components/common/LoadingBox/LoadingBox";
 
 const productFormFields: FieldData[] = [
   {

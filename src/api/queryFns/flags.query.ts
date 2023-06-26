@@ -12,7 +12,7 @@ export interface FlagItem extends Record<string, string | number> {
 
 type GetFlagsResponse = PaginatedResponse<FlagItem>;
 
-const getFlags = async (search: string, pagParams: PaginationParams) => {
+const getFlags = async (_: string, pagParams: PaginationParams) => {
   const urlWithParams = new URL(url);
   urlWithParams.searchParams.append('page', pagParams.page.toString());
   urlWithParams.searchParams.append('perPage', pagParams.perPage.toString());

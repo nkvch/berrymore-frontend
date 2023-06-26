@@ -13,7 +13,7 @@ export interface ForemanTableItem extends Record<string, string | number> {
 
 type GetForemenResponse = PaginatedResponse<ForemanTableItem>;
 
-const getForemen = async (search: string, pagParams: PaginationParams) => {
+const getForemen = async (_: string, pagParams: PaginationParams) => {
   const urlWithParams = new URL(url);
   urlWithParams.searchParams.append('page', pagParams.page.toString());
   urlWithParams.searchParams.append('perPage', pagParams.perPage.toString());

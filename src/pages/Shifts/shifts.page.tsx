@@ -1,19 +1,17 @@
+import { Avatar } from "@mui/material";
+import { eachDayOfInterval } from "date-fns";
 import { useCallback, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuthenticatedMutation from "../../api/auth/hooks/useAuthenticatedMutation";
+import useAuthenticatedQuery from "../../api/auth/hooks/useAuthenticatedQuery";
+import addShift, { AddShiftMutationDto } from "../../api/mutationFns/shifts/add-shift.mutation";
 import getEmployees from "../../api/queryFns/employees.query";
+import getShifts, { Shift } from "../../api/queryFns/shifts.query";
+import Calendar, { HiglightDatesMap } from "../../components/Calendar/Calendar";
+import { notification } from "../../components/Notifications/Notifications";
+import Form from "../../components/common/Form/Form";
 import { FieldData } from "../../components/common/Form/types";
 import authorized from "../../helpers/withAuth";
-import useAuthenticatedQuery from "../../api/auth/hooks/useAuthenticatedQuery";
-import getShifts, { Shift } from "../../api/queryFns/shifts.query";
-import { useNavigate } from "react-router-dom";
-import { eachDayOfInterval } from "date-fns";
-import Calendar, { HiglightDatesMap } from "../../components/Calendar/Calendar";
-import { Avatar } from "@mui/material";
-import useAuthenticatedMutation from "../../api/auth/hooks/useAuthenticatedMutation";
-import addShift, { AddShiftMutationDto } from "../../api/mutationFns/shifts/add-shift.mutation";
-import { notification } from "../../components/Notifications/Notifications";
-import LoadingBox from "../../components/common/LoadingBox/LoadingBox";
-import Form from "../../components/common/Form/Form";
-import { date } from "yup";
 import { HorizontalStackAvatar } from "./elements";
 
 const employeeFormData: FieldData[] = [
@@ -52,7 +50,7 @@ function Shifts() {
 
   const {
     data: shifts,
-    isFetching,
+    // isFetching,
     refetch,
   } = useAuthenticatedQuery(
     ['shifts', from, to],
@@ -117,7 +115,7 @@ function Shifts() {
   }, [shifts]);
 
   const onChangeMonth = useCallback(
-    (weekStart: Date, weekEnd: Date, monthStart: Date, monthEnd: Date) => {
+    (weekStart: Date, weekEnd: Date) => {
       setFrom(weekStart);
       setTo(weekEnd);
     },
@@ -133,7 +131,7 @@ function Shifts() {
 
   const {
     mutate: createShift,
-    isLoading: isCreatingShift,
+    // isLoading: isCreatingShift,
   } = useAuthenticatedMutation({
     mutationFn: addShift,
     onSuccess: () => {

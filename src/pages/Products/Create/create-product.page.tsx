@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuthenticatedMutation from "../../../api/auth/hooks/useAuthenticatedMutation";
-import addEmployee, { AddEmployeeRequest } from "../../../api/mutationFns/employees/addemployee.mutation";
+import createProductMutationFn, { CreateProductMutationData } from "../../../api/mutationFns/products/create-product.mutation";
 import { notification } from "../../../components/Notifications/Notifications";
 import Form from "../../../components/common/Form/Form";
 import { FieldData } from "../../../components/common/Form/types";
 import authorized from "../../../helpers/withAuth";
 import { Container } from "./elements";
-import createProductMutationFn, { CreateProductMutationData } from "../../../api/mutationFns/products/create-product.mutation";
 
 const productFormFields: FieldData[] = [
   {

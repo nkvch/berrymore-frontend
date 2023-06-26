@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams, ruRU } from '@mui/x-data-grid';
-import useAuthenticatedQuery from '../../api/auth/hooks/useAuthenticatedQuery';
-import getProducts from '../../api/queryFns/products.query';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import authorized from '../../helpers/withAuth';
-import { IconButton } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { Delete, Edit } from '@mui/icons-material';
-import ConfirmModal from '../../components/common/Modal/variants/ConfirmModal/ConfirmModal';
+import { IconButton } from '@mui/material';
+import { GridColDef, GridRenderCellParams, ruRU } from '@mui/x-data-grid';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuthenticatedMutation from '../../api/auth/hooks/useAuthenticatedMutation';
 import deleteProductMutationFn from '../../api/mutationFns/products/delete-product.mutation';
+import getProducts from '../../api/queryFns/products.query';
 import { notification } from '../../components/Notifications/Notifications';
+import ConfirmModal from '../../components/common/Modal/variants/ConfirmModal/ConfirmModal';
+import authorized from '../../helpers/withAuth';
 import { AddButton, DataGridLimitedHeight } from './elements';
 
 type Product = {
@@ -62,19 +61,19 @@ const ProductsPage: React.FC = () => {
     data,
     isFetching,
     isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
+    // hasNextPage,
+    // fetchNextPage,
     refetch,
   } = useInfiniteQuery(
     ['products'],
     ({ pageParam = 0 }) => getProducts({ page: pageParam, perPage: 10 }),
     {
-      getNextPageParam: (lastPage, pages) => {
+      getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.totalPages) {
           return lastPage.currentPage + 1;
         }
       },
-      getPreviousPageParam: (firstPage, pages) => {
+      getPreviousPageParam: (firstPage) => {
         if (firstPage.currentPage > 1) {
           return firstPage.currentPage - 1;
         }
@@ -126,6 +125,7 @@ const ProductsPage: React.FC = () => {
       <DataGridLimitedHeight
         rows={rows}
         columns={columns}
+        loading={isFetching || isFetchingNextPage}
         localeText={
           ruRU.components.MuiDataGrid.defaultProps.localeText
         }

@@ -105,7 +105,7 @@ function AddPortion() {
       label: 'Выберите продукт',
       type: 'fetch-select',
       fetchSelectConfig: {
-        queryFn: (search, pagParams) => getProducts(pagParams),
+        queryFn: (_, pagParams) => getProducts(pagParams),
         showInOption: [{
           key: 'productName',
           type: 'text',

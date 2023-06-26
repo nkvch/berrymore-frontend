@@ -7,7 +7,6 @@ import getForemen, { ForemanTableItem } from "../../../api/queryFns/foremen.quer
 import { notification } from "../../../components/Notifications/Notifications";
 import Form from "../../../components/common/Form/Form";
 import { FetchSelectConfig, FieldData } from "../../../components/common/Form/types";
-import LoadingBox from "../../../components/common/LoadingBox/LoadingBox";
 import authorized from "../../../helpers/withAuth";
 import { Container } from "./elements";
 

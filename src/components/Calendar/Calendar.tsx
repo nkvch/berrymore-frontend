@@ -1,6 +1,6 @@
 import { ArrowBack, DateRange, Event } from '@mui/icons-material';
 import { Button, Grid, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import { add, addDays, eachDayOfInterval, eachWeekOfInterval, endOfMonth, endOfWeek, format, isSameDay, isSameWeek, startOfMonth } from 'date-fns';
+import { eachDayOfInterval, eachWeekOfInterval, endOfMonth, endOfWeek, format, isSameDay, isSameWeek, startOfMonth } from 'date-fns';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Day, DayHeader, Month, MonthHeader, SelectionModeWrapper, Week } from './elements';
 
@@ -21,7 +21,7 @@ interface CalendarProps {
 const Calendar = ({
   onSelectPeriod,
   onChangeMonth,
-  highlightPeriods,
+  // highlightPeriods,
   highlightDates,
 }: CalendarProps) => {
   const currentDate = new Date();
@@ -31,7 +31,7 @@ const Calendar = ({
   const [selectDateStart, setSelectDateStart] = useState<Date | null>(null);
   const [selectDateEnd, setSelectDateEnd] = useState<Date | null>(null);
 
-  const [isPseudoElementHovered, setIsPseudoElementHovered] = useState(false);
+  const [isPseudoElementHovered,] = useState(false);
 
   const [preSelectDateStart, setPreSelectDateStart] = useState<Date | null>(null);
   const [preSelectDateEnd, setPreSelectDateEnd] = useState<Date | null>(null);
@@ -140,36 +140,36 @@ const Calendar = ({
     setPreSelectDateEnd(null);
   }, [selectionMode]);
 
-  const renderHighlighted = useCallback((date: Date) => {
-    if (!highlightPeriods) {
-      return null;
-    }
+  // const renderHighlighted = useCallback((date: Date) => {
+  //   if (!highlightPeriods) {
+  //     return null;
+  //   }
 
-    for (const period of highlightPeriods) {
-      const { start, end, render, ...data } = period;
+  //   for (const period of highlightPeriods) {
+  //     const { start, end, render, ...data } = period;
 
-      if (date >= start && date <= end) {
-        return (
-          <div
-            className='highlighted'
-            key={start.toISOString()}
-            onMouseEnter={(e) => {
-              e.stopPropagation();
-              setIsPseudoElementHovered(true);
-              setPreSelectDateStart(null);
-              setPreSelectDateEnd(null);
-            }}
-            onMouseLeave={(e) => {
-              e.stopPropagation();
-              setIsPseudoElementHovered(false);
-            }}
-          >
-            {render ? render(data) : null}
-          </div>
-        )
-      }
-    }
-  }, [highlightPeriods]);
+  //     if (date >= start && date <= end) {
+  //       return (
+  //         <div
+  //           className='highlighted'
+  //           key={start.toISOString()}
+  //           onMouseEnter={(e) => {
+  //             e.stopPropagation();
+  //             setIsPseudoElementHovered(true);
+  //             setPreSelectDateStart(null);
+  //             setPreSelectDateEnd(null);
+  //           }}
+  //           onMouseLeave={(e) => {
+  //             e.stopPropagation();
+  //             setIsPseudoElementHovered(false);
+  //           }}
+  //         >
+  //           {render ? render(data) : null}
+  //         </div>
+  //       )
+  //     }
+  //   }
+  // }, [highlightPeriods]);
 
   const renderHighlightedDates = useCallback((date: Date) => {
     if (!highlightDates) {

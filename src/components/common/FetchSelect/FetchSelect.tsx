@@ -45,14 +45,14 @@ function FetchSelect<TApiReturnItem extends {
   const {
     data,
     isFetching,
-    isFetchingNextPage,
+    // isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
     [search, uniqueId.current],
     ({ pageParam = 0 }) => queryFn(search, { page: pageParam, perPage: 5 }),
     {
-      getNextPageParam: (lastPage, pages) => {
+      getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.totalPages) {
           return lastPage.currentPage + 1;
         }
@@ -86,7 +86,7 @@ function FetchSelect<TApiReturnItem extends {
     return <div style={{ marginRight: '5px' }}>{cell}</div>;
   };
 
-  const handleInputChange = useCallback((event: SyntheticEvent<Element, Event>, value: string, reason: AutocompleteInputChangeReason) => {
+  const handleInputChange = useCallback((_: SyntheticEvent<Element, Event>, value: string, reason: AutocompleteInputChangeReason) => {
     if (backendSearch && reason === 'input')
       setSearch(value);
 
@@ -94,7 +94,7 @@ function FetchSelect<TApiReturnItem extends {
       setLocalSearch(value);
   }, []);
 
-  const onAutocompleteChange = useCallback((event: React.ChangeEvent<{}>, newvalue: TApiReturnItem | NonNullable<string | TApiReturnItem> | (string | TApiReturnItem)[] | null) => {
+  const onAutocompleteChange = useCallback((_: React.ChangeEvent<{}>, newvalue: TApiReturnItem | NonNullable<string | TApiReturnItem> | (string | TApiReturnItem)[] | null) => {
     if (!newvalue) {
       setSearch('');
       setLocalSearch('');
@@ -161,8 +161,6 @@ function FetchSelect<TApiReturnItem extends {
         }
         if (!backendSearch) {
           return option.filter(o => {
-            const isObject = typeof o === 'object';
-
             const optionLabel = o ? showInValue.map(field => o[field.key]).join(' ') : ''
 
             return optionLabel.toLowerCase().includes(localSearch.toLowerCase());

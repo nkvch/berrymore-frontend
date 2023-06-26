@@ -1,12 +1,12 @@
 import { GridRowId } from "@mui/x-data-grid";
-import { FieldData } from "../../../../components/common/Form/types";
-import getFlags, { FlagItem } from "../../../../api/queryFns/flags.query";
-import Modal from "../../../../components/common/Modal/Modal";
-import { ModalContent, ModalTitle } from "./elements";
-import Form from "../../../../components/common/Form/Form";
 import useAuthenticatedMutation from "../../../../api/auth/hooks/useAuthenticatedMutation";
 import bulkUpdateEmployeesMutationFn, { BulkUpdateEmployeesDto } from "../../../../api/mutationFns/employees/bulk-update.mutation";
+import getFlags from "../../../../api/queryFns/flags.query";
 import { notification } from "../../../../components/Notifications/Notifications";
+import Form from "../../../../components/common/Form/Form";
+import { FieldData } from "../../../../components/common/Form/types";
+import Modal from "../../../../components/common/Modal/Modal";
+import { ModalContent, ModalTitle } from "./elements";
 
 
 interface FlagsModalProps {

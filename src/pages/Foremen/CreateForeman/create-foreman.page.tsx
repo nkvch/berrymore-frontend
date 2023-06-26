@@ -1,14 +1,14 @@
-import { Alert, CircularProgress } from "@mui/material";
-import authorized from "../../../helpers/withAuth";
-import Form from "../../../components/common/Form/Form";
-import { Container } from "./elements";
-import * as Yup from 'yup';
-import { FieldData } from "../../../components/common/Form/types";
+import { Alert } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
 import addForeman, { AddForemanRequest } from "../../../api/mutationFns/addforeman.mutation";
 import { notification } from "../../../components/Notifications/Notifications";
-import { useNavigate } from "react-router-dom";
+import Form from "../../../components/common/Form/Form";
+import { FieldData } from "../../../components/common/Form/types";
 import LoadingBox from "../../../components/common/LoadingBox/LoadingBox";
+import authorized from "../../../helpers/withAuth";
+import { Container } from "./elements";
 
 const foremanFormFields: FieldData[] = [
   {

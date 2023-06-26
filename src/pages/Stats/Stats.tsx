@@ -1,18 +1,15 @@
+import { Typography } from '@mui/material';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useAuthenticatedQuery from '../../api/auth/hooks/useAuthenticatedQuery';
 import getLatestStats from '../../api/queryFns/stats.query';
-import Chart from './Chart/Chart';
-import authorized from '../../helpers/withAuth';
-import { Typography } from '@mui/material';
 import LoadingBox from '../../components/common/LoadingBox/LoadingBox';
+import authorized from '../../helpers/withAuth';
+import Chart from './Chart/Chart';
 
 
 const Stats = () => {
-  const navigate = useNavigate();
-
-  const [foremanId, setForemanId] = useState<number | undefined>();
-  const [productId, setProductId] = useState<number | undefined>();
+  const [foremanId,] = useState<number | undefined>();
+  const [productId,] = useState<number | undefined>();
 
   const {
     data: stats,

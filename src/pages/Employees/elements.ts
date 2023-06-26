@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
-import withDefaultProps from "../../helpers/withDefaultProps";
 import { Box, Button, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Info } from "@mui/icons-material";
+import withDefaultProps from "../../helpers/withDefaultProps";
 
 export const AddButton = styled(withDefaultProps({ variant: 'contained' }, Button))`
   margin-top: 1rem;

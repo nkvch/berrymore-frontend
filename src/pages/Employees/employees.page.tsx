@@ -50,12 +50,12 @@ function EmployeesPage() {
       search, foremanId, flagsPresent, flagsAbsent, hasShift
     }, { page: pageParam, perPage: 10 }),
     {
-      getNextPageParam: (lastPage, pages) => {
+      getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.totalPages) {
           return lastPage.currentPage + 1;
         }
       },
-      getPreviousPageParam: (firstPage, pages) => {
+      getPreviousPageParam: (firstPage) => {
         if (firstPage.currentPage > 1) {
           return firstPage.currentPage - 1;
         }

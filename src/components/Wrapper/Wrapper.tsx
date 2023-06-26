@@ -1,10 +1,9 @@
-import { ContactSupport, Logout } from '@mui/icons-material';
+import { Logout } from '@mui/icons-material';
 import {
   BottomNavigationAction,
   Box,
   Button,
   Divider,
-  IconButton,
   List,
   ListItemIcon,
   ListItemText
@@ -17,14 +16,13 @@ import useAuth from '../../api/auth/hooks/useAuth';
 import useLogout from '../../api/auth/hooks/useLogout';
 import useSubtitle from '../../hooks/useSubtitle';
 import { isLoggedIn, isLoggedOut } from '../../recoil/authState';
+import AddPortionButton from '../AddPortionButton/AddPortionButton';
 import Logo from '../Logo/Logo';
 import Notifications from '../Notifications/Notifications';
 import { Block } from '../elements/Block';
 import FlexContainer from '../elements/FlexContainer';
 import { MenuItems } from './config';
-import { AppBar, AppBarButton, BottomNavigation, BottomSideBarSection, ContactButtonText, Drawer, ListItemButton, LogButtonsContainer, LogoutBtn, Main, PageTitle, SideBar, SideBarLink, ToolBar } from './elements';
-import mobileState from '../../recoil/mobileState';
-import AddPortionButton from '../AddPortionButton/AddPortionButton';
+import { AppBar, AppBarButton, BottomNavigation, BottomSideBarSection, Drawer, ListItemButton, LogButtonsContainer, LogoutBtn, Main, PageTitle, SideBar, SideBarLink, ToolBar } from './elements';
 
 const Wrapper = () => {
   useAuth();
@@ -36,7 +34,7 @@ const Wrapper = () => {
   const loggedIn = useRecoilValue(isLoggedIn);
   const loggedout = useRecoilValue(isLoggedOut);
 
-  const ismobile = useRecoilValue(mobileState);
+  // const ismobile = useRecoilValue(mobileState);
 
   const logout = useLogout();
 
