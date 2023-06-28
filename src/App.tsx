@@ -17,6 +17,7 @@ import EditProductPage from './pages/Products/Edit/edit-product.page';
 import NewPortionPage from './pages/NewPortion/new-portion.page';
 import Stats from './pages/Stats/Stats';
 import EditEmployeePage from './pages/Employees/EditEmployee/edit-employee.page';
+import MainPage from './pages/Main/main.page';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -24,7 +25,7 @@ const router = createBrowserRouter([{
   children: [
     {
       path: '/',
-      element: <div>Home</div>
+      element: <MainPage />
     },
     {
       path: '/signin',

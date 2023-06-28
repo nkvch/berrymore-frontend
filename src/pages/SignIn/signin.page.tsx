@@ -40,6 +40,13 @@ function SignIn() {
       });
       navigate('/stats');
     },
+    onError: (error: Error) => {
+      notification.open({
+        type: 'error',
+        title: 'Ошибка входа',
+        text: error.message,
+      });
+    }
   });
 
   return (

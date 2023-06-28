@@ -1,5 +1,6 @@
 import { MutationFunction } from "@tanstack/react-query";
 import config from "../config";
+import fetchWithThrow from "../../helpers/fetchWithThrow";
 
 const url = `${config.baseUrl}/auth/signin`;
 
@@ -16,7 +17,7 @@ const signIn: MutationFunction<SignInResponse, {
   username: string;
   password: string;
 }> = async ({ username, password }) => {
-  const response = await fetch(url, {
+  const response = await fetchWithThrow(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',

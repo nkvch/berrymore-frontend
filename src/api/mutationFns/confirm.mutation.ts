@@ -1,5 +1,6 @@
 import { MutationFunction } from "@tanstack/react-query";
 import config from "../config";
+import fetchWithThrow from "../../helpers/fetchWithThrow";
 
 const url = `${config.baseUrl}/auth/verify`;
 
@@ -16,7 +17,7 @@ export interface VerifyRequest {
 }
 
 const confirm: MutationFunction<VerifyResponse, VerifyRequest> = async ({ token }) => {
-  const response = await fetch(url, {
+  const response = await fetchWithThrow(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',

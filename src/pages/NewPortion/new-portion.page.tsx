@@ -60,7 +60,7 @@ function AddPortion() {
     if (isMobile) {
       navigator?.mediaDevices?.getUserMedia({
         video: {
-          facingMode: { exact: 'environment' },
+          facingMode: 'environment'
         }
       }).then(() => setUseQr(true), () => setUseQr(false));
     }
@@ -144,7 +144,7 @@ function AddPortion() {
           <p>Отсканируйте QR-код сотрудника, чтобы добавить новую порцию ягод</p>
           <QrReader
             constraints={{
-              facingMode: { exact: "environment" },
+              facingMode: { exact: 'environment' },
             }}
             onResult={(result, err) => {
               if (result) {

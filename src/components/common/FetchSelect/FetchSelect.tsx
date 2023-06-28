@@ -87,6 +87,7 @@ function FetchSelect<TApiReturnItem extends {
   };
 
   const handleInputChange = useCallback((_: SyntheticEvent<Element, Event>, value: string, reason: AutocompleteInputChangeReason) => {
+    console.log(value, reason);
     if (backendSearch && reason === 'input')
       setSearch(value);
 
@@ -95,6 +96,7 @@ function FetchSelect<TApiReturnItem extends {
   }, []);
 
   const onAutocompleteChange = useCallback((_: React.ChangeEvent<{}>, newvalue: TApiReturnItem | NonNullable<string | TApiReturnItem> | (string | TApiReturnItem)[] | null) => {
+    console.log(newvalue);
     if (!newvalue) {
       setSearch('');
       setLocalSearch('');
@@ -104,7 +106,7 @@ function FetchSelect<TApiReturnItem extends {
 
     if (multiple && Array.isArray(newvalue)) {
       if (newvalue.length === 0) {
-        onChange(null);
+        onChange([]);
         return;
       }
 

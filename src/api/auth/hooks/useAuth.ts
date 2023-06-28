@@ -27,6 +27,16 @@ const useAuth = () => {
         isPending: false,
       });
     },
+    onError: () => {
+      setAuth({
+        user: null,
+        isPending: false,
+      });
+    },
+    retryOnMount: false,
+    retry: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

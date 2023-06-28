@@ -11,11 +11,11 @@ import {
 // import LogoutBtn from './components/LogoutBtn';
 import { Helmet } from 'react-helmet';
 import { Outlet, useNavigate } from "react-router-dom";
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import useAuth from '../../api/auth/hooks/useAuth';
 import useLogout from '../../api/auth/hooks/useLogout';
 import useSubtitle from '../../hooks/useSubtitle';
-import { isLoggedIn, isLoggedOut } from '../../recoil/authState';
+import authState, { isLoggedIn, isLoggedOut } from '../../recoil/authState';
 import AddPortionButton from '../AddPortionButton/AddPortionButton';
 import Logo from '../Logo/Logo';
 import Notifications from '../Notifications/Notifications';
