@@ -4,20 +4,16 @@ import { GridColDef, GridRenderCellParams, GridRow, GridRowId, GridRowSelectionM
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthenticatedMutation from "../../api/auth/hooks/useAuthenticatedMutation";
-import deleteEmployeeMutationFn, { DeleteEmployeeMutationVariables } from "../../api/mutationFns/employees/delete-employee.mutation";
 import getEmployees, { EmployeeTableItem } from "../../api/queryFns/employees.query";
-import { notification } from "../../components/Notifications/Notifications";
-import ConfirmModal from "../../components/common/Modal/variants/ConfirmModal/ConfirmModal";
 import authorized from "../../helpers/withAuth";
 import CalculateModal from "./components/CalculateModal/CalculateModal";
+import DeleteModal from "./components/DeleteModal/DeleteModal";
 import FlagsModal from "./components/FlagsModal/FlagsModal";
 import PrintModal from "./components/PrintModal/PrintModal";
 import SearchToolbar from "./components/SearchToolbar/SearchToolbar";
 import ShiftModal from "./components/ShiftModal/ShiftModal";
 import WithFlagsBar from "./components/WithFlagsBar/WithFlagsBar";
 import { AddButton, DataGridLimitedHeight, FetchMoreButton, PageActionButton, PagesInfo, PaginationWrapper } from "./elements";
-import DeleteModal from "./components/DeleteModal/DeleteModal";
 
 let selectedEmployeesIds: GridRowSelectionModel = [];
 

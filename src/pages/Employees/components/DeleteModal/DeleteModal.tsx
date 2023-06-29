@@ -1,17 +1,16 @@
 import { Alert, CircularProgress } from "@mui/material";
+import { useMemo } from "react";
+import useAuthenticatedMutation from "../../../../api/auth/hooks/useAuthenticatedMutation";
 import useAuthenticatedQuery from "../../../../api/auth/hooks/useAuthenticatedQuery";
+import archiveEmployee from "../../../../api/mutationFns/employees/archive-employee.mutation";
+import deleteAllEmployeeData from "../../../../api/mutationFns/employees/delete-all-data.mutation";
+import deleteEmployeeMutationFn from "../../../../api/mutationFns/employees/delete-employee.mutation";
 import checkEmployeeData from "../../../../api/queryFns/check-employee-data.query";
 import { EmployeeTableItem } from "../../../../api/queryFns/employees.query";
+import { notification } from "../../../../components/Notifications/Notifications";
 import LoadingBox from "../../../../components/common/LoadingBox/LoadingBox";
 import Modal from "../../../../components/common/Modal/Modal";
 import { ArchiveEmployee, DeleteAllEmplyeeData, DeleteEmployee, Title } from "./elements";
-import { useMemo } from "react";
-import deleteEmployeeMutationFn, { DeleteEmployeeMutationVariables } from "../../../../api/mutationFns/employees/delete-employee.mutation";
-import useAuthenticatedMutation from "../../../../api/auth/hooks/useAuthenticatedMutation";
-import { notification } from "../../../../components/Notifications/Notifications";
-import deleteAllEmployeeData from "../../../../api/mutationFns/employees/delete-all-data.mutation";
-import updateEmployee from "../../../../api/mutationFns/employees/update-employee.mutation";
-import archiveEmployee from "../../../../api/mutationFns/employees/archive-employee.mutation";
 
 interface DeleteModalProps {
   employee: EmployeeTableItem | null;
