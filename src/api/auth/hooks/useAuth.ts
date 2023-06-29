@@ -6,10 +6,12 @@ import authState from "../../../recoil/authState";
 import getJwtExpDate from "../../../utils/getJwtExpDate";
 import getMe from "../../queryFns/me.query";
 import refreshToken from "../resfreshToken";
+import useLogout from "./useLogout";
 
 const useAuth = () => {
   const location = useLocation();
   const [, setAuth] = useRecoilState(authState);
+  const logout = useLogout();
 
   useQuery({
     queryKey: ['me'],
@@ -27,16 +29,12 @@ const useAuth = () => {
         isPending: false,
       });
     },
-    onError: () => {
-      setAuth({
-        user: null,
-        isPending: false,
-      });
-    },
+    onError: logout,
     retryOnMount: false,
     retry: false,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    enabled: !!localStorage.getItem('jwt'),
   });
 
   useEffect(() => {

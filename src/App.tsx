@@ -18,6 +18,7 @@ import NewPortionPage from './pages/NewPortion/new-portion.page';
 import Stats from './pages/Stats/Stats';
 import EditEmployeePage from './pages/Employees/EditEmployee/edit-employee.page';
 import MainPage from './pages/Main/main.page';
+import HistoryPage from './pages/History/history.page';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -87,6 +88,10 @@ const router = createBrowserRouter([{
       path: '/stats',
       element: <Stats />
     },
+    {
+      path: '/history',
+      element: <HistoryPage />
+    }
   ]
 }]);
 

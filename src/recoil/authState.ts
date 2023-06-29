@@ -9,7 +9,7 @@ const authState = atom<{
 }>({
   key: 'authState',
   default: {
-    isPending: true,
+    isPending: false,
     user: null,
   },
 });

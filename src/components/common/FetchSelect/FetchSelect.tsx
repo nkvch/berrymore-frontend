@@ -9,7 +9,7 @@ export interface DisplayedItem<TApiReturnItem> {
 }
 
 function FetchSelect<TApiReturnItem extends {
-  [key: string]: string | number;
+  [key: string]: any;
 }>(props: {
   queryFn: (search: string, pagParams: PaginationParams) => Promise<PaginatedResponse<TApiReturnItem>>,
   multiple?: boolean,

@@ -1,6 +1,6 @@
 import { CircularProgress, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import confirm from "../../api/mutationFns/confirm.mutation";
@@ -9,6 +9,7 @@ import { notification } from "../../components/Notifications/Notifications";
 import Form from "../../components/common/Form/Form";
 import { FieldData } from "../../components/common/Form/types";
 import { FormContainer } from "./elements";
+import useQueryParams from "../../hooks/useQueryParams";
 
 const signUpFormFields: FieldData[] = [
   {
@@ -57,7 +58,10 @@ enum SignUpSteps {
 }
 
 function SignUp() {
-  const [step, setStep] = useState(SignUpSteps.FillForm);
+  const params = useQueryParams();
+  const token = params.get('token');
+
+  const [step, setStep] = useState(token ? SignUpSteps.ConfirmEmail : SignUpSteps.FillForm);
   const navigate = useNavigate();
 
   const {
@@ -86,6 +90,12 @@ function SignUp() {
       navigate('/signin');
     }
   });
+
+  useEffect(() => {
+    if (token) {
+      confirmEmailMutation({ token });
+    }
+  }, [token, confirmEmailMutation])
 
   return (
     <FormContainer>

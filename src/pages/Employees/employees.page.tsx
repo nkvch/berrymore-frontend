@@ -17,6 +17,7 @@ import SearchToolbar from "./components/SearchToolbar/SearchToolbar";
 import ShiftModal from "./components/ShiftModal/ShiftModal";
 import WithFlagsBar from "./components/WithFlagsBar/WithFlagsBar";
 import { AddButton, DataGridLimitedHeight, FetchMoreButton, PageActionButton, PagesInfo, PaginationWrapper } from "./elements";
+import DeleteModal from "./components/DeleteModal/DeleteModal";
 
 let selectedEmployeesIds: GridRowSelectionModel = [];
 
@@ -62,29 +63,6 @@ function EmployeesPage() {
       }
     }
   );
-
-  const {
-    mutate: deleteEmployeeMutation,
-    isLoading: isDeleting,
-  } = useAuthenticatedMutation<unknown, Error, DeleteEmployeeMutationVariables>({
-    mutationKey: ['deleteEmployee', deletingEmployee?.id],
-    mutationFn: deleteEmployeeMutationFn,
-    onSuccess: () => {
-      notification.open({
-        type: 'success',
-        title: `Сборщик ${deletingEmployee?.firstName} ${deletingEmployee?.lastName} успешно удален`,
-      });
-      setDeletingEmployee(null);
-      refetch();
-    },
-    onError: (error) => {
-      notification.open({
-        type: 'error',
-        title: 'Ошибка при удалении сборщика',
-        text: error.message,
-      });
-    }
-  })
 
   const columns: GridColDef<EmployeeTableItem>[] = useMemo(() => ([
     // { @TODO: set permissions on s3 bucket
@@ -162,7 +140,8 @@ function EmployeesPage() {
         return (
           <>
             <IconButton
-              onClick={() => {
+              onClick={(event) => {
+                event.stopPropagation();
                 navigate(`/employees/${params.row.id}`);
               }}
               title="Редактировать"
@@ -170,7 +149,8 @@ function EmployeesPage() {
               <Edit />
             </IconButton>
             <IconButton
-              onClick={() => {
+              onClick={(event) => {
+                event.stopPropagation();
                 setDeletingEmployee(params.row);
               }}
               title="Удалить"
@@ -178,7 +158,8 @@ function EmployeesPage() {
               <Delete />
             </IconButton>
             <IconButton
-              onClick={() => {
+              onClick={(event) => {
+                event.stopPropagation();
                 setCalculatingEmployee(params.row);
               }}
               title="Расчет"
@@ -243,19 +224,12 @@ function EmployeesPage() {
         empData={calculatingEmployee}
         onClose={() => setCalculatingEmployee(null)}
       />
-      <ConfirmModal
-        open={!!deletingEmployee}
-        onCancel={() => setDeletingEmployee(null)}
-        onConfirm={() => {
-          if (deletingEmployee) {
-            deleteEmployeeMutation({
-              id: deletingEmployee.id,
-            });
-          }
+      <DeleteModal
+        employee={deletingEmployee}
+        onClose={() => {
+          setDeletingEmployee(null);
+          refetch();
         }}
-        loading={isDeleting}
-        title="Удаление сборщика"
-        text={`Вы действительно хотите удалить сборщика ${deletingEmployee?.firstName} ${deletingEmployee?.lastName}? Данное действие нельзя отменить.`}
       />
       <SearchToolbar
         onSearchSubmit={setSearch}
@@ -301,7 +275,7 @@ function EmployeesPage() {
           }
           // toolbar: GridToolbar, @TODO: implement
         }}
-        checkboxSelection={true}
+        checkboxSelection
         onRowSelectionModelChange={(params) => {
           selectedEmployeesIds = params;
         }}

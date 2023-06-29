@@ -17,6 +17,7 @@ const useSubtitle = () => {
   const isProducts = useMatch('/products');
   const isCreateProduct = useMatch('/products/create');
   const isProduct = useMatch('/products/:id');
+  const isHistory = useMatch('/history');
   const queryParams = useQueryParams();
   let date = queryParams.get('date');
 
@@ -57,6 +58,8 @@ const useSubtitle = () => {
     return 'Новый продукт';
   } else if (isProduct) {
     return 'Редактирование продукта';
+  } else if (isHistory) {
+    return 'История';
   } else {
     return '';
   }
