@@ -124,7 +124,7 @@ function EditEmployee() {
     }) => {
       notification.open({
         type: 'success',
-        title: `Данные сотрудника ${firstName} ${lastName} успешно обновлены`,
+        title: `Данные сотрудника ${lastName} ${firstName} успешно обновлены`,
       });
       navigate('/employees');
     },

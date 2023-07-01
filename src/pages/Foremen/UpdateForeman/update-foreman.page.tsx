@@ -60,7 +60,7 @@ function UpdateForeman() {
     }) => {
       notification.open({
         type: 'success',
-        title: `Бригадир ${firstName} ${lastName} успешно обновлен`,
+        title: `Бригадир ${lastName} ${firstName} успешно обновлен`,
       });
       navigate('/foremen');
     },

@@ -40,7 +40,7 @@ function ForemenPage() {
     onSuccess: () => {
       notification.open({
         type: 'success',
-        title: `Бригадир ${deletingForeman?.firstName} ${deletingForeman?.lastName} успешно удален`,
+        title: `Бригадир ${deletingForeman?.lastName} ${deletingForeman?.firstName} успешно удален`,
       });
       setDeletingForeman(null);
       refetch();
@@ -61,7 +61,7 @@ function ForemenPage() {
       sortable: false,
       width: 160,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+        `${params.row.lastName || ''} ${params.row.firstName || ''}`,
     },
     {
       field: 'actions',
@@ -107,7 +107,7 @@ function ForemenPage() {
         }}
         loading={isDeleting}
         title="Удаление бригадира"
-        text={`Вы действительно хотите удалить бригадира ${deletingForeman?.firstName} ${deletingForeman?.lastName}? Данное действие нельзя отменить.`}
+        text={`Вы действительно хотите удалить бригадира ${deletingForeman?.lastName} ${deletingForeman?.firstName}? Данное действие нельзя отменить.`}
       />
       <DataGridLimitedHeight
         columns={columns as any}

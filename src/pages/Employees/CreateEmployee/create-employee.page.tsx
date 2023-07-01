@@ -106,7 +106,7 @@ function CreateEmployee() {
     }) => {
       notification.open({
         type: 'success',
-        title: `Сотрудник ${firstName} ${lastName} успешно создан`,
+        title: `Сотрудник ${lastName} ${firstName} успешно создан`,
       });
       navigate('/employees');
     },

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Clear, Info } from "@mui/icons-material";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import withDefaultProps from "../../../../helpers/withDefaultProps";
 
 export const ToolbarWrapper = styled(Box)`
   display: flex;
@@ -20,3 +21,7 @@ export const ClearIcon = styled(Clear)`
   cursor: pointer;
   margin-right: 0.5rem;
 `;
+
+export const HotButton = styled(withDefaultProps({ variant: 'outlined' }, Button))`
+
+`

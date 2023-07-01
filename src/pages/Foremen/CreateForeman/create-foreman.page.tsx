@@ -57,7 +57,7 @@ function CreateForeman() {
     }) => {
       notification.open({
         type: 'success',
-        title: `Бригадир ${firstName} ${lastName} успешно создан`,
+        title: `Бригадир ${lastName} ${firstName} успешно создан`,
       });
       navigate('/foremen');
     },

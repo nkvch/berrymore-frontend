@@ -111,7 +111,7 @@ const CalculateModal = ({ onClose, empData }: CalculateModalProps) => {
         <Box>
           <ModalTitle>
             Рассчёт сборщика{' '}
-            {empData ? `${empData.firstName} ${empData.lastName}` : ''}
+            {empData ? `${empData.lastName} ${empData.firstName}` : ''}
           </ModalTitle>
           <p>За какой период рассчиать сборщика?</p>
           <div style={{

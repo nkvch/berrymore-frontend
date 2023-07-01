@@ -91,7 +91,7 @@ function History() {
       headerName: 'Сборщик',
       width: 200,
       sortable: false,
-      renderCell: (params: GridRenderCellParams) => `${params.value.firstName} ${params.value.lastName}`
+      renderCell: (params: GridRenderCellParams) => `${params.value.lastName} ${params.value.firstName}`
     },
     {
       field: 'foreman',
@@ -99,7 +99,7 @@ function History() {
       width: 200,
       sortable: false,
       valueGetter: (params: GridValueGetterParams<HistoryItem>) =>
-        `${params.row.employees.foreman.firstName} ${params.row.employees.foreman.lastName}`
+        `${params.row.employees.foreman.lastName} ${params.row.employees.foreman.firstName}`
     },
     {
       field: 'actions',

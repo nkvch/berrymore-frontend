@@ -133,6 +133,9 @@ const Wrapper = () => {
       <BottomNavigation value='TODO'>
         {menuItems.map(({ text, Icon, linkUrl }) => (
           <BottomNavigationAction
+            sx={{
+              minWidth: 0,
+            }}
             key={text}
             label={text}
             icon={<Icon />}

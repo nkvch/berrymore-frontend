@@ -86,7 +86,7 @@ function EmployeesPage() {
       sortable: true,
       width: 200,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+        `${params.row.lastName || ''} ${params.row.firstName || ''}`,
     },
     {
       field: 'contract',
@@ -100,7 +100,7 @@ function EmployeesPage() {
       sortable: false,
       width: 160,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.foreman?.firstName || ''} ${params.row.foreman?.lastName || ''}`,
+        `${params.row.foreman?.lastName || ''} ${params.row.foreman?.firstName || ''}`,
     },
     {
       field: 'phone',

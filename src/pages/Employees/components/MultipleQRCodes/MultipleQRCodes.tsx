@@ -101,7 +101,7 @@ const MultipleQRCodes = ({ data }: MultipleQRCodesProps) => {
             return (
               <View style={cardStyles.card} key={`pdfcardview${idx}`}>
                 <View style={styles.names}>
-                  <Text>{`${firstName} ${lastName}`}</Text>
+                  <Text>{`${lastName} ${firstName}`}</Text>
                 </View>
                 <Image
                   src={qrCodeImage}

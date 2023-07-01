@@ -4,6 +4,12 @@ import { Box } from "@mui/material";
 
 export const ToolbarWrapper = styled(Box)`
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  @media screen and (min-width: 1440px) {
+    flex-direction: row;
+  }
+  margin-bottom: 1rem;
 `;
 
 export const SearchInfoIcon = styled(Info)`

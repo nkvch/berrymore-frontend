@@ -29,7 +29,7 @@ function DayPage() {
       sortable: true,
       width: 200,
       valueGetter: (params: GridValueGetterParams<Shift>) =>
-        `${params.row.employees.firstName || ''} ${params.row.employees.lastName || ''}`,
+        `${params.row.employees.lastName || ''} ${params.row.employees.firstName || ''}`,
     },
     {
       field: 'foreman',
@@ -37,7 +37,7 @@ function DayPage() {
       sortable: true,
       width: 200,
       valueGetter: (params: GridValueGetterParams<Shift>) =>
-        `${params.row.employees.foreman.firstName || ''} ${params.row.employees.foreman.lastName || ''}`,
+        `${params.row.employees.foreman.lastName || ''} ${params.row.employees.foreman.firstName || ''}`,
     },
     {
       field: 'actions',

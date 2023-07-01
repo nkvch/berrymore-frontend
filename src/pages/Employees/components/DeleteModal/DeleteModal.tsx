@@ -40,7 +40,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ employee, onClose }) => {
     onSuccess: () => {
       notification.open({
         type: 'success',
-        title: `История и смены сборщика ${employee?.firstName} ${employee?.lastName} успешно удалены`,
+        title: `История и смены сборщика ${employee?.lastName} ${employee?.firstName} успешно удалены`,
       });
       refetchEmployeeHistoryAndShifts();
     },
@@ -86,7 +86,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ employee, onClose }) => {
     onSuccess: () => {
       notification.open({
         type: 'success',
-        title: `Сборщик ${employee?.firstName} ${employee?.lastName} успешно удален`,
+        title: `Сборщик ${employee?.lastName} ${employee?.firstName} успешно удален`,
       });
       onClose();
     },

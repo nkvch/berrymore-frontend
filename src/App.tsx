@@ -15,7 +15,7 @@ import ProductsPage from './pages/Products/products.page';
 import CreateProductPage from './pages/Products/Create/create-product.page';
 import EditProductPage from './pages/Products/Edit/edit-product.page';
 import NewPortionPage from './pages/NewPortion/new-portion.page';
-import Stats from './pages/Stats/Stats';
+import Stats from './pages/Stats/stats.page';
 import EditEmployeePage from './pages/Employees/EditEmployee/edit-employee.page';
 import MainPage from './pages/Main/main.page';
 import HistoryPage from './pages/History/history.page';

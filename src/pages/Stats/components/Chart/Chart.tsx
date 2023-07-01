@@ -6,10 +6,10 @@ import {
   XYPlot,
   YAxis
 } from 'react-vis';
-import { StatsResponse } from '../../../api/queryFns/stats.query';
+import { StatsResponse } from '../../../../api/queryFns/stats.query';
 
 interface ChartProps {
-  data: StatsResponse['top10Employees']
+  data: StatsResponse['topEmployees']
 }
 
 function Chart({ data }: ChartProps) {
@@ -52,7 +52,7 @@ function Chart({ data }: ChartProps) {
             <YAxis />
             <VerticalBarSeries
               data={data.map((d) => ({
-                x: d.firstName + ' ' + d.lastName,
+                x: d.lastName + ' ' + d.firstName,
                 y: d.amount,
               }))}
               barWidth={0.5}
