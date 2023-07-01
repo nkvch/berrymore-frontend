@@ -1,6 +1,6 @@
+import { ArrowDropDown } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Table } from "@mui/material";
 import { StatsResponse } from "../../../../api/queryFns/stats.query";
-import { ArrowDropDown, Expand } from "@mui/icons-material";
 
 interface EmployeesResultsTableProps {
   employees: StatsResponse['topEmployees']
