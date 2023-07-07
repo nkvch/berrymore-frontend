@@ -13,6 +13,7 @@ import PrintModal from "./components/PrintModal/PrintModal";
 import SearchToolbar from "./components/SearchToolbar/SearchToolbar";
 import ShiftModal from "./components/ShiftModal/ShiftModal";
 import WithFlagsBar from "./components/WithFlagsBar/WithFlagsBar";
+import { GridPagination } from "@mui/x-data-grid";
 import { AddButton, DataGridLimitedHeight, FetchMoreButton, PageActionButton, PagesInfo, PaginationWrapper } from "./elements";
 
 let selectedEmployeesIds: GridRowSelectionModel = [];
@@ -33,6 +34,9 @@ function EmployeesPage() {
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [isFlagsModalOpen, setIsFlagsModalOpen] = useState(false);
   const [isShiftModalOpen, setIsShiftModalOpen] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(100);
 
   const {
     data,
@@ -189,6 +193,22 @@ function EmployeesPage() {
   const rows = useMemo(() => data?.pages.flatMap((page) => page.items) || [], [data]);
   const totalItems = useMemo(() => data?.pages[0].totalItems || 0, [data]);
 
+  const isCurrentPageFull = useMemo(() => {
+    return rows.length >= pageSize * (currentPage + 1)
+  }, [rows, pageSize, currentPage]);
+
+  const isCurrentPageLastLoaded = useMemo(() => {
+    return rows.length <= pageSize * (currentPage + 1)
+  }, [rows, pageSize, currentPage]);
+
+  const shouldLoadMoreBeVisible = useMemo(() => {
+    return hasNextPage && isCurrentPageLastLoaded;
+  }, [hasNextPage, isCurrentPageFull, isCurrentPageLastLoaded]);
+
+  const shouldLoadMoreMoveToNextPage = useMemo(() => {
+    return hasNextPage && isCurrentPageFull;
+  }, [hasNextPage, isCurrentPageFull, isCurrentPageLastLoaded]);
+
   return (
     <>
       {
@@ -242,19 +262,34 @@ function EmployeesPage() {
         columns={columns as any}
         rows={rows}
         loading={isFetching}
+        paginationModel={{
+          page: currentPage,
+          pageSize,
+        }}
+        onPaginationModelChange={(params) => {
+          setCurrentPage(params.page);
+          setPageSize(params.pageSize);
+        }}
         slots={{
           pagination: () => (
             <PaginationWrapper>
               {
-                hasNextPage && (
+                shouldLoadMoreBeVisible && (
                   <FetchMoreButton
-                    onClick={() => fetchNextPage()}
+                    onClick={() => {
+                      fetchNextPage().then(() => {
+                        if (shouldLoadMoreMoveToNextPage) {
+                          setCurrentPage(currentPage + 1);
+                        }
+                      })
+                    }}
                     disabled={!hasNextPage || isFetchingNextPage}
                   >
-                    Показать еще
+                    Показать еще {shouldLoadMoreMoveToNextPage ? '(след. страница)' : ''}
                   </FetchMoreButton>
                 )
               }
+              <GridPagination />
               <PagesInfo>
                 {rows.length} из {totalItems}
               </PagesInfo>
