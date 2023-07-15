@@ -49,7 +49,7 @@ function EmployeesPage() {
     ['employees', search, foremanId, flagsPresent, flagsAbsent, hasShift],
     ({ pageParam = 0 }) => getEmployees({
       search, foremanId, flagsPresent, flagsAbsent, hasShift
-    }, { page: pageParam, perPage: 10 }),
+    }, { page: pageParam, perPage: pageSize }),
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.totalPages) {
