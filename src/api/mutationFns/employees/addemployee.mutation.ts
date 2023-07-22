@@ -42,7 +42,7 @@ const addEmployee: MutationFunction<AddEmployeeResponse, AddEmployeeRequest> = a
 
   formData.append("firstName", firstName);
   formData.append("lastName", lastName);
-  formData.append("foremanId", foremanId.toString());
+  formData.append("foremanId", foremanId ? foremanId.toString() : '-1');
   formData.append("address", address);
   formData.append("phone", phone);
   formData.append("contract", contract);

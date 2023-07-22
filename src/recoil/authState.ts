@@ -32,4 +32,13 @@ export const isLoggedOut = selector({
   }
 });
 
+export const UserSelector = selector({
+  key: 'User',
+  get: ({ get }) => {
+    const { user } = get(authState);
+
+    return user;
+  }
+});
+
 export default authState;

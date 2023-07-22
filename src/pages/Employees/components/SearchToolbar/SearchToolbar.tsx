@@ -4,6 +4,8 @@ import { useState } from "react";
 import FetchSelect from "../../../../components/common/FetchSelect/FetchSelect";
 import getForemen, { ForemanTableItem } from "../../../../api/queryFns/foremen.query";
 import getFlags, { FlagItem } from "../../../../api/queryFns/flags.query";
+import { useRecoilValue } from "recoil";
+import { UserSelector } from "../../../../recoil/authState";
 
 interface SearchToolbarPropd {
   onSearchSubmit: (search: string) => void;
@@ -50,6 +52,8 @@ function SearchToolbar(props: SearchToolbarPropd) {
   const open = Boolean(searchInfoAnchorEl);
   const id = open ? 'search-info' : undefined;
 
+  const me = useRecoilValue(UserSelector);
+
   return (
     <ToolbarWrapper>
       <TextField
@@ -88,28 +92,32 @@ function SearchToolbar(props: SearchToolbarPropd) {
       >
         Найти
       </Button>
-      <FetchSelect<ForemanTableItem>
-        label='Бригадир'
-        multiple={false}
-        value={foremanId as ForemanTableItem['id']}
-        onChange={(value) => setForemanId(value as ForemanTableItem['id'])}
-        queryFn={getForemen}
-        showInOption={[{
-          key: 'firstName',
-          type: 'text'
-        }, {
-          key: 'lastName',
-          type: 'text'
-        }]}
-        showInValue={[{
-          key: 'firstName',
-          type: 'text'
-        }, {
-          key: 'lastName',
-          type: 'text'
-        }]}
-        valueKey='id'
-      />
+      {
+        me?.roleName === 'owner' && (
+          <FetchSelect<ForemanTableItem>
+            label='Бригадир'
+            multiple={false}
+            value={foremanId as ForemanTableItem['id']}
+            onChange={(value) => setForemanId(value as ForemanTableItem['id'])}
+            queryFn={getForemen}
+            showInOption={[{
+              key: 'firstName',
+              type: 'text'
+            }, {
+              key: 'lastName',
+              type: 'text'
+            }]}
+            showInValue={[{
+              key: 'firstName',
+              type: 'text'
+            }, {
+              key: 'lastName',
+              type: 'text'
+            }]}
+            valueKey='id'
+          />
+        )
+      }
       <FetchSelect<FlagItem>
         label='С метками'
         multiple={true}

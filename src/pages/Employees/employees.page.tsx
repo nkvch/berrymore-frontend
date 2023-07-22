@@ -1,8 +1,8 @@
 import { AddTask, Delete, Edit, Flag, PointOfSale, QrCode2 } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { GridColDef, GridRenderCellParams, GridRow, GridRowId, GridRowSelectionModel, GridValueGetterParams, ruRU } from "@mui/x-data-grid";
+import { GridColDef, GridPagination, GridRenderCellParams, GridRow, GridRowId, GridRowSelectionModel, GridValueGetterParams, ruRU, useGridApiRef } from "@mui/x-data-grid";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import getEmployees, { EmployeeTableItem } from "../../api/queryFns/employees.query";
 import authorized from "../../helpers/withAuth";
@@ -13,7 +13,6 @@ import PrintModal from "./components/PrintModal/PrintModal";
 import SearchToolbar from "./components/SearchToolbar/SearchToolbar";
 import ShiftModal from "./components/ShiftModal/ShiftModal";
 import WithFlagsBar from "./components/WithFlagsBar/WithFlagsBar";
-import { GridPagination } from "@mui/x-data-grid";
 import { AddButton, DataGridLimitedHeight, FetchMoreButton, PageActionButton, PagesInfo, PaginationWrapper } from "./elements";
 
 let selectedEmployeesIds: GridRowSelectionModel = [];
@@ -35,8 +34,19 @@ function EmployeesPage() {
   const [isFlagsModalOpen, setIsFlagsModalOpen] = useState(false);
   const [isShiftModalOpen, setIsShiftModalOpen] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(100);
+  const [currentPage, setCurrentPage] = useState(Number(sessionStorage.getItem('currentPage')) || 0);
+  const [pageSize, setPageSize] = useState(Number(sessionStorage.getItem('pageSize')) || 100);
+
+  const apiRef = useGridApiRef();
+
+  useEffect(() => {
+    sessionStorage.setItem('currentPage', JSON.stringify(currentPage));
+  }, [currentPage]);
+
+  useEffect(() => {
+    sessionStorage.setItem('pageSize', JSON.stringify(pageSize));
+  }, [pageSize]);
+
 
   const {
     data,
@@ -63,6 +73,19 @@ function EmployeesPage() {
       }
     }
   );
+
+  useEffect(() => {
+    const rowIdFromStorage = sessionStorage.getItem('selectedEmployeeIndex');
+
+    if (rowIdFromStorage && data && !isFetching) {
+      const rowId = Number(rowIdFromStorage);
+      const row = apiRef.current.getRow(rowId);
+
+      if (row) {
+        apiRef.current.scrollToIndexes({ rowIndex: rowId - 10 });
+      }
+    }
+  }, [apiRef, data, isFetching]);
 
   const columns: GridColDef<EmployeeTableItem>[] = useMemo(() => ([
     // { @TODO: set permissions on s3 bucket
@@ -141,7 +164,7 @@ function EmployeesPage() {
           <>
             <IconButton
               onClick={(event) => {
-                event.stopPropagation();
+                // event.stopPropagation();
                 navigate(`/employees/${params.row.id}`);
               }}
               title="Редактировать"
@@ -150,7 +173,7 @@ function EmployeesPage() {
             </IconButton>
             <IconButton
               onClick={(event) => {
-                event.stopPropagation();
+                // event.stopPropagation();
                 setDeletingEmployee(params.row);
               }}
               title="Удалить"
@@ -159,7 +182,7 @@ function EmployeesPage() {
             </IconButton>
             <IconButton
               onClick={(event) => {
-                event.stopPropagation();
+                // event.stopPropagation();
                 setCalculatingEmployee(params.row);
               }}
               title="Расчет"
@@ -259,8 +282,12 @@ function EmployeesPage() {
         setHasShift={setHasShift}
       />
       <DataGridLimitedHeight
+        apiRef={apiRef}
         columns={columns as any}
         rows={rows}
+        onCellClick={(params) => {
+          sessionStorage.setItem('selectedEmployeeIndex', JSON.stringify(params.id));
+        }}
         loading={isFetching}
         paginationModel={{
           page: currentPage,
