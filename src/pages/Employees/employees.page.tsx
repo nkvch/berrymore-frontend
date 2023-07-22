@@ -163,7 +163,7 @@ function EmployeesPage() {
         return (
           <>
             <IconButton
-              onClick={(event) => {
+              onClick={() => {
                 // event.stopPropagation();
                 navigate(`/employees/${params.row.id}`);
               }}
@@ -172,7 +172,7 @@ function EmployeesPage() {
               <Edit />
             </IconButton>
             <IconButton
-              onClick={(event) => {
+              onClick={() => {
                 // event.stopPropagation();
                 setDeletingEmployee(params.row);
               }}
@@ -181,7 +181,7 @@ function EmployeesPage() {
               <Delete />
             </IconButton>
             <IconButton
-              onClick={(event) => {
+              onClick={() => {
                 // event.stopPropagation();
                 setCalculatingEmployee(params.row);
               }}
