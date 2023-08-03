@@ -19,81 +19,88 @@ import Stats from './pages/Stats/stats.page';
 import EditEmployeePage from './pages/Employees/EditEmployee/edit-employee.page';
 import MainPage from './pages/Main/main.page';
 import HistoryPage from './pages/History/history.page';
+import FlagsPage from './pages/Flags/flags.page';
 
-const router = createBrowserRouter([{
-  path: '/',
-  element: <Wrapper />,
-  children: [
-    {
-      path: '/',
-      element: <MainPage />
-    },
-    {
-      path: '/signin',
-      element: <SignIn />
-    },
-    {
-      path: '/signup',
-      element: <SignUp />
-    },
-    {
-      path: '/foremen',
-      element: <ForemenPage />,
-    },
-    {
-      path: '/foremen/create',
-      element: <CreateUpdateForemanPage />
-    },
-    {
-      path: '/foremen/:id',
-      element: <UpdateForemanPage />
-    },
-    {
-      path: '/employees',
-      element: <EmployeesPage />
-    },
-    {
-      path: '/employees/create',
-      element: <CreateEmployeePage />
-    },
-    {
-      path: '/employees/:id',
-      element: <EditEmployeePage />
-    },
-    {
-      path: '/shifts',
-      element: <ShiftsPage />
-    },
-    {
-      path: '/shifts/day',
-      element: <DayPage />,
-    },
-    {
-      path: '/products',
-      element: <ProductsPage />
-    },
-    {
-      path: '/products/create',
-      element: <CreateProductPage />
-    },
-    {
-      path: '/products/:id',
-      element: <EditProductPage />
-    },
-    {
-      path: '/new-portion',
-      element: <NewPortionPage />
-    },
-    {
-      path: '/stats',
-      element: <Stats />
-    },
-    {
-      path: '/history',
-      element: <HistoryPage />
-    }
-  ]
-}]);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Wrapper />,
+    children: [
+      {
+        path: '/',
+        element: <MainPage />,
+      },
+      {
+        path: '/signin',
+        element: <SignIn />,
+      },
+      {
+        path: '/signup',
+        element: <SignUp />,
+      },
+      {
+        path: '/foremen',
+        element: <ForemenPage />,
+      },
+      {
+        path: '/foremen/create',
+        element: <CreateUpdateForemanPage />,
+      },
+      {
+        path: '/foremen/:id',
+        element: <UpdateForemanPage />,
+      },
+      {
+        path: '/employees',
+        element: <EmployeesPage />,
+      },
+      {
+        path: '/employees/create',
+        element: <CreateEmployeePage />,
+      },
+      {
+        path: '/employees/:id',
+        element: <EditEmployeePage />,
+      },
+      {
+        path: '/shifts',
+        element: <ShiftsPage />,
+      },
+      {
+        path: '/shifts/day',
+        element: <DayPage />,
+      },
+      {
+        path: '/products',
+        element: <ProductsPage />,
+      },
+      {
+        path: '/products/create',
+        element: <CreateProductPage />,
+      },
+      {
+        path: '/products/:id',
+        element: <EditProductPage />,
+      },
+      {
+        path: '/new-portion',
+        element: <NewPortionPage />,
+      },
+      {
+        path: '/stats',
+        element: <Stats />,
+      },
+      {
+        path: '/history',
+        element: <HistoryPage />,
+      },
+      {
+        path: '/flags',
+        element: <FlagsPage />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return (

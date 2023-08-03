@@ -6,11 +6,11 @@ import {
   Divider,
   List,
   ListItemIcon,
-  ListItemText
+  ListItemText,
 } from '@mui/material';
 // import LogoutBtn from './components/LogoutBtn';
 import { Helmet } from 'react-helmet';
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import useAuth from '../../api/auth/hooks/useAuth';
 import useLogout from '../../api/auth/hooks/useLogout';
@@ -22,7 +22,21 @@ import Notifications from '../Notifications/Notifications';
 import { Block } from '../elements/Block';
 import FlexContainer from '../elements/FlexContainer';
 import { MenuItems } from './config';
-import { AppBar, AppBarButton, BottomNavigation, BottomSideBarSection, Drawer, ListItemButton, LogButtonsContainer, LogoutBtn, Main, PageTitle, SideBar, SideBarLink, ToolBar } from './elements';
+import {
+  AppBar,
+  AppBarButton,
+  BottomNavigation,
+  BottomSideBarSection,
+  Drawer,
+  ListItemButton,
+  LogButtonsContainer,
+  LogoutBtn,
+  Main,
+  PageTitle,
+  SideBar,
+  SideBarLink,
+  ToolBar,
+} from './elements';
 
 const Wrapper = () => {
   useAuth();
@@ -45,9 +59,7 @@ const Wrapper = () => {
       <Helmet>
         <title>Berrymore | {subTitle}</title>
       </Helmet>
-      <AppBar
-        className={loggedout ? 'loggedout' : 'loggedin'}
-      >
+      <AppBar className={loggedout ? 'loggedout' : 'loggedin'}>
         <ToolBar>
           <Logo subTitle={subTitle} />
           <FlexContainer>
@@ -109,28 +121,23 @@ const Wrapper = () => {
               Связаться с поддержкой
             </IconButton> */}
             <Divider />
-            {loggedIn && <LogoutBtn
-              onClick={logout}
-              endIcon={<Logout />}
-            >
-              Выйти
-            </LogoutBtn>}
+            {loggedIn && (
+              <LogoutBtn onClick={logout} endIcon={<Logout />}>
+                Выйти
+              </LogoutBtn>
+            )}
           </BottomSideBarSection>
         </SideBar>
       </Drawer>
-      <Main
-        className={loggedout ? 'loggedout' : 'loggedin'}
-      >
+      <Main className={loggedout ? 'loggedout' : 'loggedin'}>
         <Notifications />
         <Block>
-          <PageTitle>
-            {subTitle}
-          </PageTitle>
+          <PageTitle>{subTitle}</PageTitle>
           <Outlet />
         </Block>
       </Main>
       <AddPortionButton />
-      <BottomNavigation value='TODO'>
+      <BottomNavigation value="TODO">
         {menuItems.map(({ text, Icon, linkUrl }) => (
           <BottomNavigationAction
             sx={{
