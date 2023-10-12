@@ -25,10 +25,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          whoami
-          echo $NVM_DIR
-          cat ~/.bashrc
-          source ~/.bashrc
+          export NVM_DIR=~/.nvm
+          source ~/.nvm/nvm.sh
           echo $NVM_DIR
           nvm use 18
           npm install -g yarn
