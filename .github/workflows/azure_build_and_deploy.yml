@@ -20,6 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          source ~/.bashrc
           nvm use 18
           npm install -g yarn
           npm install -g @azure/static-web-apps-cli
