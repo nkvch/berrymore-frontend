@@ -27,6 +27,7 @@ jobs:
         run: |
           whoami
           echo $NVM_DIR
+          cat ~/.bashrc
           source ~/.bashrc
           echo $NVM_DIR
           nvm use 18
