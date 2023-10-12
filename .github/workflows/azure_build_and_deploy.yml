@@ -20,6 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          nvm use 16
           npm install -g yarn
           npm install -g @azure/static-web-apps-cli
           yarn install
