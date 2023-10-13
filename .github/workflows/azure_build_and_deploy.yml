@@ -18,17 +18,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Load nvm script
-        run: |
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
 
       - name: Build and deploy
         run: |
-          export NVM_DIR=~/.nvm
-          source ~/.nvm/nvm.sh
-          echo $NVM_DIR
-          nvm use 18
+          # export NVM_DIR=~/.nvm
+          # source ~/.nvm/nvm.sh
+          # nvm use 18
           npm install -g yarn
           npm install -g @azure/static-web-apps-cli
           yarn install
